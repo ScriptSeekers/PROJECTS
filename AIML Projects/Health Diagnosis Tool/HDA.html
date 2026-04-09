@@ -1,0 +1,849 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>SCRIPTSEEKERS : BIO-ENGINE | Advanced Health Matrix</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700&display=swap" rel="stylesheet">
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <style>
+    :root {
+      --primary: #00f2fe;
+      --secondary: #4facfe;
+      --accent: #f093fb;
+      --bg-dark: #060b13;
+      --card-bg: rgba(16, 24, 39, 0.7);
+      --glass: rgba(255, 255, 255, 0.03);
+      --glass-border: rgba(255, 255, 255, 0.1);
+      --text-main: #e2e8f0;
+      --text-muted: #94a3b8;
+      --danger: #ff4757;
+      --warning: #ffa502;
+      --success: #2ed573;
+      --font-family: 'Outfit', sans-serif;
+      --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background: linear-gradient(rgba(6, 11, 19, 0.8), rgba(6, 11, 19, 0.9)), url('bg.png') center/cover fixed;
+      font-family: var(--font-family);
+      color: var(--text-main);
+      line-height: 1.6;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 40px 20px;
+      overflow-x: hidden;
+    }
+
+    /* Scrollbar */
+    ::-webkit-scrollbar {
+      width: 8px;
+    }
+    ::-webkit-scrollbar-track {
+      background: var(--bg-dark);
+    }
+    ::-webkit-scrollbar-thumb {
+      background: var(--glass-border);
+      border-radius: 10px;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: var(--primary);
+    }
+
+    .container {
+      max-width: 1100px;
+      width: 100%;
+      z-index: 1;
+    }
+
+    header {
+      text-align: center;
+      margin-bottom: 50px;
+      animation: fadeInDown 1s ease-out;
+    }
+
+    header .logo-icon {
+      margin-bottom: 15px;
+      color: var(--primary);
+      filter: drop-shadow(0 0 15px rgba(0, 242, 254, 0.5));
+    }
+
+    header .brand-subtitle {
+      text-transform: uppercase;
+      letter-spacing: 6px;
+      font-size: 0.75rem;
+      color: var(--primary);
+      margin-bottom: 5px;
+      font-weight: 600;
+      opacity: 0.8;
+    }
+
+    header h1 {
+      font-size: 4rem;
+      font-weight: 700;
+      background: linear-gradient(to right, var(--primary), var(--secondary));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      margin-bottom: 5px;
+      letter-spacing: -2px;
+    }
+
+    header p {
+      color: var(--text-muted);
+      font-size: 1.1rem;
+      font-weight: 300;
+    }
+
+    .app-grid {
+      display: grid;
+      grid-template-columns: 1.2fr 0.8fr;
+      gap: 30px;
+      align-items: start;
+    }
+
+    @media (max-width: 992px) {
+      .app-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    form {
+      background: var(--card-bg);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      padding: 40px;
+      border-radius: 24px;
+      border: 1px solid var(--glass-border);
+      box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+      animation: fadeInLeft 1s ease-out;
+    }
+
+    .form-section-title {
+      font-size: 0.85rem;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      color: var(--primary);
+      margin-bottom: 25px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .form-group {
+      margin-bottom: 24px;
+    }
+
+    .grid-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 8px;
+      font-weight: 500;
+      font-size: 0.95rem;
+      color: var(--text-main);
+    }
+
+    input, select, textarea {
+      width: 100%;
+      background: var(--glass);
+      border: 1px solid var(--glass-border);
+      border-radius: 12px;
+      padding: 14px 18px;
+      color: white;
+      font-family: var(--font-family);
+      font-size: 1rem;
+      transition: var(--transition);
+      outline: none;
+    }
+
+    input:focus, select:focus, textarea:focus {
+      border-color: var(--primary);
+      background: rgba(255, 255, 255, 0.08);
+      box-shadow: 0 0 15px rgba(0, 242, 254, 0.2);
+    }
+
+    select option {
+      background: var(--bg-dark);
+      color: white;
+    }
+
+    .symptom-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+      gap: 12px;
+      margin-top: 10px;
+    }
+
+    .symptom-tag {
+      position: relative;
+      cursor: pointer;
+    }
+
+    .symptom-tag input {
+      position: absolute;
+      opacity: 0;
+      cursor: pointer;
+    }
+
+    .symptom-tag .checkmark {
+      display: block;
+      padding: 10px 15px;
+      background: var(--glass);
+      border: 1px solid var(--glass-border);
+      border-radius: 10px;
+      font-size: 0.85rem;
+      text-align: center;
+      transition: var(--transition);
+      color: var(--text-muted);
+    }
+
+    .symptom-tag input:checked + .checkmark {
+      background: linear-gradient(135deg, var(--primary), var(--secondary));
+      color: var(--bg-dark);
+      border-color: transparent;
+      font-weight: 600;
+      box-shadow: 0 4px 12px rgba(0, 242, 254, 0.3);
+    }
+
+    .symptom-tag:hover .checkmark {
+      border-color: var(--primary);
+      color: var(--text-main);
+    }
+
+    button {
+      width: 100%;
+      padding: 18px;
+      background: linear-gradient(135deg, var(--primary), var(--secondary));
+      color: var(--bg-dark);
+      border: none;
+      border-radius: 16px;
+      font-size: 1.1rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: var(--transition);
+      margin-top: 20px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      box-shadow: 0 10px 20px -5px rgba(0, 242, 254, 0.5);
+    }
+
+    button:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 15px 30px -5px rgba(0, 242, 254, 0.6);
+      filter: brightness(1.1);
+    }
+
+    button:active {
+      transform: translateY(0);
+    }
+
+    #result {
+      min-height: 400px;
+      animation: fadeInRight 1s ease-out;
+    }
+
+    .result-placeholder {
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      color: var(--text-muted);
+      border: 2px dashed var(--glass-border);
+      border-radius: 24px;
+      padding: 60px;
+    }
+
+    .result-card {
+      background: var(--card-bg);
+      backdrop-filter: blur(20px);
+      border-radius: 24px;
+      border: 1px solid var(--glass-border);
+      padding: 35px;
+      height: 100%;
+    }
+
+    .disease-list {
+      list-style: none;
+      margin-top: 20px;
+    }
+
+    .disease-item {
+      background: var(--glass);
+      border: 1px solid var(--glass-border);
+      border-radius: 16px;
+      padding: 20px;
+      margin-bottom: 15px;
+      cursor: pointer;
+      transition: var(--transition);
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
+    }
+
+    .disease-item:hover {
+      background: rgba(255, 255, 255, 0.08);
+      border-color: var(--primary);
+      transform: scale(1.02);
+    }
+
+    .disease-item.active {
+      background: rgba(255, 255, 255, 0.1);
+      border-color: var(--primary);
+    }
+
+    .disease-name {
+      font-size: 1.25rem;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .risk-badge {
+      font-size: 0.75rem;
+      padding: 4px 10px;
+      border-radius: 20px;
+      font-weight: 700;
+      text-transform: uppercase;
+    }
+
+    .risk-low { color: var(--success); background: rgba(46, 213, 115, 0.1); border: 1px solid rgba(46, 213, 115, 0.2); }
+    .risk-medium { color: var(--warning); background: rgba(255, 165, 2, 0.1); border: 1px solid rgba(255, 165, 2, 0.2); }
+    .risk-high { color: var(--danger); background: rgba(255, 71, 87, 0.1); border: 1px solid rgba(255, 71, 87, 0.2); }
+
+    .disease-details-pane {
+      margin-top: 30px;
+      padding-top: 30px;
+      border-top: 1px solid var(--glass-border);
+      animation: fadeIn 0.5s ease;
+    }
+
+    .detail-section {
+      margin-bottom: 20px;
+    }
+
+    .detail-label {
+      font-size: 0.8rem;
+      color: var(--primary);
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      margin-bottom: 5px;
+      display: block;
+    }
+
+    .detail-content {
+      font-size: 1rem;
+      color: var(--text-main);
+    }
+
+    .disclaimer {
+      margin-top: 50px;
+      text-align: center;
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      max-width: 700px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    /* Animations */
+    @keyframes fadeInDown {
+      from { opacity: 0; transform: translateY(-30px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes fadeInLeft {
+      from { opacity: 0; transform: translateX(-30px); }
+      to { opacity: 1; transform: translateX(0); }
+    }
+    @keyframes fadeInRight {
+      from { opacity: 0; transform: translateX(30px); }
+      to { opacity: 1; transform: translateX(0); }
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+
+    /* Multi-step logic visibility */
+    .hidden {
+      display: none;
+    }
+
+    .pulse {
+      animation: pulse-animation 2s infinite;
+    }
+
+    @keyframes pulse-animation {
+      0% { box-shadow: 0 0 0 0px rgba(0, 242, 254, 0.4); }
+      100% { box-shadow: 0 0 0 20px rgba(0, 242, 254, 0); }
+    }
+
+    @media (max-width: 600px) {
+      body { padding: 20px 10px; }
+      header h1 { font-size: 2.2rem; }
+      form { padding: 25px; }
+      .grid-row { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <div class="logo-icon"><i data-lucide="cpu" size="48"></i></div>
+      <div class="brand-subtitle">ScriptSeekers Presents</div>
+      <h1>BIO-ENGINE</h1>
+      <p>Precision health diagnostics via autonomous intelligence matrix.</p>
+    </header>
+
+    <div class="app-grid">
+      <!-- Input Form -->
+      <form id="healthForm" autocomplete="off">
+        <div class="form-section-title">
+          <i data-lucide="user"></i> Patient Information
+        </div>
+        <div class="form-group">
+          <label for="name">Full Name</label>
+          <input type="text" id="name" name="name" placeholder="John Doe" required />
+        </div>
+        
+        <div class="grid-row">
+          <div class="form-group">
+            <label for="age">Age</label>
+            <input type="number" id="age" name="age" min="0" max="150" placeholder="30" required />
+          </div>
+          <div class="form-group">
+            <label for="gender">Gender</label>
+            <select id="gender" name="gender" required>
+              <option value="" disabled selected>Select</option>
+              <option value="male">Male</option>
+              <option value="female">Female</option>
+              <option value="other">Other</option>
+              <option value="preferNotToSay">N/A</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="form-section-title" style="margin-top: 10px;">
+          <i data-lucide="heart"></i> Vital Metrics
+        </div>
+        <div class="grid-row">
+          <div class="form-group">
+            <label for="height">Height (cm)</label>
+            <input type="number" id="height" name="height" placeholder="175" required />
+          </div>
+          <div class="form-group">
+            <label for="weight">Weight (kg)</label>
+            <input type="number" id="weight" name="weight" placeholder="70" required />
+          </div>
+        </div>
+        <div class="grid-row">
+          <div class="form-group">
+            <label for="pulseRate">Pulse Rate (BPM)</label>
+            <input type="number" id="pulseRate" name="pulseRate" placeholder="72" required />
+          </div>
+          <div class="form-group">
+            <label for="bloodPressure">BP (Systolic/Diastolic)</label>
+            <input type="text" id="bloodPressure" name="bloodPressure" placeholder="120/80" />
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="temperature">Body Temp (°C)</label>
+          <input type="number" id="temperature" name="temperature" step="0.1" placeholder="36.6" />
+        </div>
+
+        <div class="form-section-title" style="margin-top: 10px;">
+          <i data-lucide="thermometer"></i> Symptoms Observed
+        </div>
+        <div class="symptom-grid">
+          <label class="symptom-tag"><input type="checkbox" name="symptoms" value="fever"><span class="checkmark">Fever</span></label>
+          <label class="symptom-tag"><input type="checkbox" name="symptoms" value="cough"><span class="checkmark">Cough</span></label>
+          <label class="symptom-tag"><input type="checkbox" name="symptoms" value="headache"><span class="checkmark">Headache</span></label>
+          <label class="symptom-tag"><input type="checkbox" name="symptoms" value="fatigue"><span class="checkmark">Fatigue</span></label>
+          <label class="symptom-tag"><input type="checkbox" name="symptoms" value="nausea"><span class="checkmark">Nausea</span></label>
+          <label class="symptom-tag"><input type="checkbox" name="symptoms" value="dizziness"><span class="checkmark">Dizziness</span></label>
+          <label class="symptom-tag"><input type="checkbox" name="symptoms" value="chest_pain"><span class="checkmark">Chest Pain</span></label>
+          <label class="symptom-tag"><input type="checkbox" name="symptoms" value="shortness_breath"><span class="checkmark">Breathless</span></label>
+        </div>
+
+        <div class="form-group" style="margin-top: 25px;">
+          <label for="otherInfo">Clinical Notes / Other Details</label>
+          <textarea id="otherInfo" name="otherInfo" rows="3" placeholder="Enter any specific observations..."></textarea>
+        </div>
+
+        <button type="submit" id="analyzeBtn">
+          <i data-lucide="zap"></i> Run AI Diagnosis
+        </button>
+      </form>
+
+      <!-- Results Display -->
+      <section id="result">
+        <div class="result-placeholder" id="placeholder">
+          <i data-lucide="shield-alert" size="48" style="margin-bottom: 20px; opacity: 0.5;"></i>
+          <h3>Ready for Analysis</h3>
+          <p>Fill out the medical profile to generate a detailed diagnostic report.</p>
+        </div>
+        <div id="diagnostics-container" class="hidden">
+          <!-- Populated by JS -->
+        </div>
+      </section>
+    </div>
+
+    <p class="disclaimer">
+      <strong>Precise Disclaimer:</strong> This engine uses advanced heuristics for educational diagnostics. It is NOT a substitute for professional medical consultation. Your clinical data is processed locally and never stored in any cloud repository.
+    </p>
+  </div>
+
+  <script>
+    (() => {
+      // Initialize Lucide Icons
+      lucide.createIcons();
+
+      // Diseases Database
+      const diseases = {
+        "Hypertension": {
+          symptoms: ["Headache", "Dizziness", "Shortness of breath", "Nosebleeds", "Chest pain"],
+          causes: "Often caused by genetics, unhealthy diet, logic lack of exercise, obesity, stress, and smoking.",
+          prevention: "Maintain healthy weight, reduce salt, manage stress, and regular exercise.",
+          treatments: "Lifestyle changes, DASH diet, and antihypertensive medications.",
+          risk: "medium"
+        },
+        "Anemia": {
+          symptoms: ["Fatigue", "Weakness", "Pale skin", "Shortness of breath", "Dizziness"],
+          causes: "Iron deficiency, vitamin B12 deficiency, or chronic inflammatory diseases.",
+          prevention: "Iron-rich diet (spinach, red meat), vitamin supplements.",
+          treatments: "Iron supplements, dietary adjustments, and treating underlying trigger.",
+          risk: "medium"
+        },
+        "Tachycardia": {
+          symptoms: ["Rapid heartbeat", "Chest pain", "Shortness of breath", "Fainting"],
+          causes: "Heart disease, high stress, excessive caffeine, or thyroid conditions.",
+          prevention: "Avoid stimulants, manage stress, and maintain cardiac health.",
+          treatments: "Beta-blockers, ablation, or lifestyle modifications.",
+          risk: "high"
+        },
+        "Underweight": {
+          symptoms: ["Fatigue", "Weak immunity", "Thinning hair", "Dizziness"],
+          causes: "Malnutrition, hyperthyroidism, or metabolic disorders.",
+          prevention: "Nutrient-dense diet, calorie tracking, and strength training.",
+          treatments: "Nutritional counseling and high-calorie healthy diet.",
+          risk: "medium"
+        },
+        "Overweight/Obesity": {
+          symptoms: ["Joint pain", "Breathlessness", "Fatigue", "Snoring"],
+          causes: "Caloric surplus, sedentary behavior, and metabolic factors.",
+          prevention: "Calorie control, regular cardio, and whole-food diet.",
+          treatments: "Behavioral therapy, structured exercise, and clinical supervision.",
+          risk: "medium"
+        },
+        "Bradycardia": {
+          symptoms: ["Fatigue", "Fainting", "Dizziness", "Chest pain"],
+          causes: "Aging, medications, or intrinsic heart block.",
+          prevention: "Cardiac checkups and managing underlying heart conditions.",
+          treatments: "Pacemaker insertion or medication reviews.",
+          risk: "high"
+        },
+        "Dehydration": {
+          symptoms: ["Dry mouth", "Dark urine", "Dizziness", "Headache"],
+          causes: "Low fluid intake, heat exhaustion, or excessive perspiration.",
+          prevention: "Consistent water intake and electrolyte monitoring.",
+          treatments: "Fluid replacement and rest.",
+          risk: "low"
+        },
+        "Fever": {
+          symptoms: ["Muscle aches", "Chills", "Sweating", "Elevated Temp"],
+          causes: "Infections, inflammation, or immune response.",
+          prevention: "Hygiene, vaccinations, and avoiding exposure.",
+          treatments: "Hydration, rest, and antipyretics.",
+          risk: "low"
+        },
+        "Common Cold": {
+          symptoms: ["Sore throat", "Cough", "Congestion", "Sneezing"],
+          causes: "Viral infections (rhinoviruses).",
+          prevention: "Hand washing and immune support.",
+          treatments: "Symptom management, rest, and fluids.",
+          risk: "low"
+        },
+        "Influenza (Flu)": {
+          symptoms: ["Fever", "Body aches", "Fatigue", "Severe cough"],
+          causes: "Influenza viruses.",
+          prevention: "Annual flu vaccination and distancing.",
+          treatments: "Antivirals (Tamiflu) and supportive care.",
+          risk: "medium"
+        },
+        "Pneumonia": {
+          symptoms: ["Cough with phlegm", "Fever", "Difficulty breathing", "Chest pain"],
+          causes: "Bacterial or viral lung infection.",
+          prevention: "Pneumococcal vaccine and pulmonary hygiene.",
+          treatments: "Antibiotics or antivirals depending on type.",
+          risk: "high"
+        },
+        "Asthma": {
+          symptoms: ["Wheezing", "Breathlessness", "Chest tightness"],
+          causes: "Airway hyper-responsiveness to triggers.",
+          prevention: "Trigger avoidance (smoke, dust, pollen).",
+          treatments: "Inhalers (bronchodilators) and steroids.",
+          risk: "medium"
+        },
+        "Diabetes Mellitus": {
+          symptoms: ["Polydipsia", "Polyuria", "Unexplained weight loss", "Blurred vision"],
+          causes: "Insulin resistance or deficiency.",
+          prevention: "Weight management and low-glycemic diet.",
+          treatments: "Insulin therapy and blood sugar monitoring.",
+          risk: "high"
+        },
+        "Migraine": {
+          symptoms: ["Pulsing headache", "Photophobia", "Nausea", "Aura"],
+          causes: "Genetic triggers and neurological sensitivity.",
+          prevention: "Trigger tracking and stress reduction.",
+          treatments: "Triptans, dark room rest, and prophylactics.",
+          risk: "medium"
+        },
+        "Gastroenteritis": {
+          symptoms: ["Diarrhea", "Vomiting", "Cramps", "Nausea"],
+          causes: "Viral or bacterial infection of the gut.",
+          prevention: "Safe food handling and hand washing.",
+          treatments: "Oral rehydration and bland diet (BRAT).",
+          risk: "medium"
+        },
+        "Urinary Tract Infection": {
+          symptoms: ["Dysuria", "Urgency", "Pelvic pain", "Cloudy urine"],
+          causes: "Bacterial colonization of the urinary tract.",
+          prevention: "Hydration and hygiene protocols.",
+          treatments: "Antibiotics and increase fluid flow.",
+          risk: "medium"
+        },
+        "Coronary Artery Disease": {
+          symptoms: ["Angina", "Shortness of breath", "Fatigue"],
+          causes: "Plaque accumulation in cardiac arteries.",
+          prevention: "Low-cholesterol diet and active lifestyle.",
+          treatments: "Statins, surgery, or stents.",
+          risk: "high"
+        },
+        "Hypothyroidism": {
+          symptoms: ["Weight gain", "Cold intolerance", "Dry skin", "Fatigue"],
+          causes: "Underactive thyroid gland.",
+          prevention: "Iodine sufficiency (where applicable).",
+          treatments: "Levothyroxine replacement.",
+          risk: "medium"
+        },
+        "Hyperthyroidism": {
+          symptoms: ["Anxiety", "Tachycardia", "Weight loss", "Heat intolerance"],
+          causes: "Overactive thyroid gland.",
+          prevention: "Regular endocrine screening.",
+          treatments: "Anti-thyroid meds or radioactive iodine.",
+          risk: "medium"
+        },
+        "Osteoarthritis": {
+          symptoms: ["Joint stiffness", "Pain", "Swelling"],
+          causes: "Mechanical wear of joint cartilage.",
+          prevention: "Weight management and joint-friendly exercise.",
+          treatments: "Physical therapy and anti-inflammatories.",
+          risk: "medium"
+        },
+        "Depression": {
+          symptoms: ["Anhedonia", "Persistent low mood", "Sleep changes"],
+          causes: "Complex neurochemical and environmental factors.",
+          prevention: "Social support and stress management.",
+          treatments: "Therapy (CBT) and SSRIs.",
+          risk: "medium"
+        },
+        "Anxiety Disorder": {
+          symptoms: ["Restlessness", "Panic", "Muscle tension"],
+          causes: "Biological predisposition and chronic stress.",
+          prevention: "Relaxation techniques and cognitive training.",
+          treatments: "Anxiolytics and therapeutic intervention.",
+          risk: "medium"
+        },
+        "COVID-19": {
+          symptoms: ["Loss of taste/smell", "Fever", "Cough", "Body aches"],
+          causes: "SARS-CoV-2 infection.",
+          prevention: "Vaccination and PPE.",
+          treatments: "Antivirals and supportive hydration.",
+          risk: "medium"
+        }
+      };
+
+      const form = document.getElementById('healthForm');
+      const placeholder = document.getElementById('placeholder');
+      const resultContainer = document.getElementById('diagnostics-container');
+      const analyzeBtn = document.getElementById('analyzeBtn');
+
+      function analyzeData(data) {
+        const findings = [];
+        const symptoms = data.symptoms;
+        const hInM = data.height / 100;
+        const bmi = data.weight / (hInM * hInM);
+        const pulse = data.pulseRate;
+        const temp = data.temperature || 37;
+
+        // BP Parsing
+        let sys = null, dia = null;
+        if (data.bloodPressure) {
+          const bpArr = data.bloodPressure.split('/');
+          if (bpArr.length === 2) {
+            sys = parseInt(bpArr[0]);
+            dia = parseInt(bpArr[1]);
+          }
+        }
+
+        // Logic Engine
+        if ((sys > 140) || (dia > 90) || (pulse > 90) || (bmi > 25)) findings.push("Hypertension");
+        if ((pulse > 100 && (symptoms.includes('fatigue') || symptoms.includes('dizziness'))) || (bmi < 18.5 && symptoms.includes('fatigue'))) findings.push("Anemia");
+        if (pulse > 100) findings.push("Tachycardia");
+        if (bmi < 18.5) findings.push("Underweight");
+        if (bmi > 25) findings.push("Overweight/Obesity");
+        if (pulse < 60) findings.push("Bradycardia");
+        if (symptoms.includes('dizziness')) findings.push("Dehydration");
+        if (temp > 37.5) {
+          findings.push("Fever");
+          if (symptoms.includes('cough') && symptoms.includes('shortness_breath')) { findings.push("Pneumonia"); findings.push("COVID-19"); }
+          else if (symptoms.includes('cough')) { findings.push("Common Cold"); findings.push("Influenza (Flu)"); }
+        }
+        if (symptoms.includes('shortness_breath')) findings.push("Asthma");
+        if (symptoms.includes('headache')) {
+          if (symptoms.includes('nausea')) findings.push("Migraine");
+        }
+        if (symptoms.includes('nausea')) findings.push("Gastroenteritis");
+        if (data.otherInfo && data.otherInfo.toLowerCase().includes("thirst")) findings.push("Diabetes Mellitus");
+        if (data.otherInfo && data.otherInfo.toLowerCase().includes("pain") && symptoms.includes('chest_pain')) findings.push("Coronary Artery Disease");
+        if (symptoms.includes('fatigue') && bmi > 25) findings.push("Hypothyroidism");
+        if (symptoms.includes('nausea') && bmi < 18.5) findings.push("Hyperthyroidism");
+
+        const unique = [...new Set(findings)];
+        return unique.length > 0 ? unique : ["General wellness noted. No patterns detected."];
+      }
+
+      function renderReport(matches) {
+        placeholder.classList.add('hidden');
+        resultContainer.classList.remove('hidden');
+
+        if (matches[0].includes("General wellness")) {
+          resultContainer.innerHTML = `
+            <div class="result-card">
+              <h2 style="color: var(--success);">Analysis Complete</h2>
+              <p style="margin-top:20px;">${matches[0]}</p>
+            </div>`;
+          return;
+        }
+
+        let listHtml = matches.map(name => {
+          const d = diseases[name];
+          if (!d) return '';
+          return `
+            <div class="disease-item" data-name="${name}">
+              <div class="disease-name">
+                <i data-lucide="activity" size="18"></i> ${name}
+                <span class="risk-badge risk-${d.risk}">${d.risk}</span>
+              </div>
+              <div style="font-size: 0.85rem; color: var(--text-muted);">
+                Symptoms: ${d.symptoms.slice(0,3).join(', ')}...
+              </div>
+            </div>`;
+        }).join('');
+
+        resultContainer.innerHTML = `
+          <div class="result-card">
+            <h3>Diagnostic Matches</h3>
+            <p style="font-size: 0.9rem; color: var(--text-muted); margin-bottom: 20px;">We found ${matches.length} potential patterns. Select one to view detailed medical insights.</p>
+            <div class="disease-list">${listHtml}</div>
+            <div id="details-view" class="disease-details-pane hidden"></div>
+          </div>`;
+
+        lucide.createIcons();
+
+        // Interaction
+        const items = resultContainer.querySelectorAll('.disease-item');
+        items.forEach(item => {
+          item.addEventListener('click', () => {
+            items.forEach(i => i.classList.remove('active'));
+            item.classList.add('active');
+            showDetails(item.dataset.name);
+          });
+        });
+      }
+
+      function showDetails(name) {
+        const d = diseases[name];
+        const pane = document.getElementById('details-view');
+        pane.classList.remove('hidden');
+        pane.innerHTML = `
+          <h2 style="margin-bottom: 20px; display: flex; align-items: center; gap: 10px;">
+            <i data-lucide="info" color="var(--primary)"></i> ${name} Overview
+          </h2>
+          <div class="detail-section">
+            <span class="detail-label">Associated Symptoms</span>
+            <div class="detail-content">${d.symptoms.join(', ')}</div>
+          </div>
+          <div class="detail-section">
+            <span class="detail-label">Common Etiology (Causes)</span>
+            <div class="detail-content">${d.causes}</div>
+          </div>
+          <div class="detail-section">
+            <span class="detail-label">Clinical Prevention</span>
+            <div class="detail-content">${d.prevention}</div>
+          </div>
+          <div class="detail-section">
+            <span class="detail-label">Standard Management</span>
+            <div class="detail-content">${d.treatments}</div>
+          </div>
+        `;
+        lucide.createIcons();
+        pane.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+
+      form.addEventListener('submit', (e) => {
+        e.preventDefault();
+        
+        // Button state
+        analyzeBtn.innerHTML = '<i data-lucide="refresh-cw" class="spin"></i> Processing...';
+        analyzeBtn.disabled = true;
+        lucide.createIcons();
+
+        setTimeout(() => {
+          const raw = new FormData(form);
+          const symptoms = Array.from(form.querySelectorAll('input[name="symptoms"]:checked')).map(cb => cb.value);
+          
+          const data = {
+            name: raw.get('name'),
+            age: parseInt(raw.get('age')),
+            gender: raw.get('gender'),
+            height: parseFloat(raw.get('height')),
+            weight: parseFloat(raw.get('weight')),
+            pulseRate: parseInt(raw.get('pulseRate')),
+            bloodPressure: raw.get('bloodPressure'),
+            temperature: raw.get('temperature') ? parseFloat(raw.get('temperature')) : null,
+            symptoms: symptoms,
+            otherInfo: raw.get('otherInfo')
+          };
+
+          const results = analyzeData(data);
+          renderReport(results);
+          
+          analyzeBtn.innerHTML = '<i data-lucide="zap"></i> Run AI Diagnosis';
+          analyzeBtn.disabled = false;
+          lucide.createIcons();
+        }, 800);
+      });
+    })();
+  </script>
+</body>
+</html>
+>

@@ -1,0 +1,2 @@
+To run Sentiment Detection:
+.\.venv\Scripts\python "Sentiment Detection.py"

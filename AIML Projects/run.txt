@@ -1,0 +1,40 @@
+============================================================
+🚀 PROJECT RUN COMMANDS (Unified .venv)
+============================================================
+
+Run these commands from this root folder:
+
+1. Object Detection (Streamlit)
+   .venv\Scripts\python -m streamlit run "ObjectDetection\App.py"
+
+2. Image Analyzer (Streamlit)
+   .venv\Scripts\python -m streamlit run "Img Anz/app.py"
+
+3. Car Price Predictor (Streamlit)
+   .venv\Scripts\python "Car_Prediction\train_model.py"
+   .venv\Scripts\python -m streamlit run "Car_Prediction\app.py"
+
+4. J.A.R.V.I.S Voice Assistant
+   .venv\Scripts\python "J.A.R.V.I.S\jarvis.py"
+
+5. Action Reflection (Human Tracking)
+   .venv\Scripts\python "Action Reflection\AR.py"
+
+6. Sentiment Analysis
+   .venv\Scripts\python "Sentiment Detection\Sentiment Detection.py"
+
+7. Smart Health Monitoring
+   .venv\Scripts\python "Smart Health Monitoring\Smart Health Monitoring.py"
+
+8. Data Analysis with Pandas
+   .venv\Scripts\python "Data analysis with pandas\Data analysis with pandas.py"
+
+9. Chat-Bot (Gemini)
+   .venv\Scripts\python "Chat-Bot\CBAPI.py"
+
+10. Cognitive Analyzer (AI Feedback)
+    .venv\Scripts\python "cognitive analyzer\cognitive_analyzer.py"
+
+============================================================
+💡 Note: Ensure your microphone and webcam are connected!
+============================================================

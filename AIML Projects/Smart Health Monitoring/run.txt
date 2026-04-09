@@ -1,0 +1,2 @@
+To run Smart Health Monitoring:
+.\.venv\Scripts\python "Smart Health Monitoring.py"

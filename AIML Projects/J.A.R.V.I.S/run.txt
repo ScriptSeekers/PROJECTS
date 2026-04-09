@@ -1,0 +1,2 @@
+To run J.A.R.V.I.S:
+.\.venv\Scripts\python jarvis.py

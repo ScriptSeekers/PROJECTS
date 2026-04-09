@@ -1,0 +1,2 @@
+To run Chat-Bot:
+.\.venv\Scripts\python CBAPI.py

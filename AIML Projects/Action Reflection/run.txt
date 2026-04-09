@@ -1,0 +1,2 @@
+To run Action Reflection:
+.\.venv\Scripts\python AR.py

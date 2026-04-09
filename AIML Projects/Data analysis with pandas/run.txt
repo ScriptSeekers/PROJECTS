@@ -1,0 +1,2 @@
+To run Data Analysis:
+.\.venv\Scripts\python "Data analysis with pandas.py"

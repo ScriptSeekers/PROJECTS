@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CareerPath - Your Future Starts with the Right Decision Today</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header>
+        <div class="container">
+            <nav>
+                <div class="logo">Career<span>Path</span></div>
+                <ul class="nav-links">
+                    <li><a href="#" onclick="showPage('home')">Home</a></li>
+                    <li><a href="#" onclick="showPage('about')">About Us</a></li>
+                    <li><a href="#" onclick="showPage('feedback')">Feedback</a></li>
+                    <li id="history-link" class="hidden"><a href="#" onclick="showPage('history')">History</a></li>
+                </ul>
+                <div>
+                    <a href="#" class="btn" id="auth-button" onclick="showPage('login')">Login</a>
+                    <a href="#" class="btn btn-outline hidden" id="logout-button" onclick="logout()">Logout</a>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Home Page -->
+    <section id="home" class="page">
+        <div class="hero">
+            <div class="container">
+                <h1>Discover Your Perfect Career Path</h1>
+                <p>Take our comprehensive AI-powered psychometric test and get personalized career recommendations, stream guidance, and college suggestions tailored just for you.</p>
+                <a href="#" class="btn" onclick="checkAuthAndStart()">Start Your Journey</a>
+                <a href="#" class="btn btn-outline" onclick="showPage('about')">Learn More</a>
+            </div>
+        </div>
+
+        <div class="features">
+            <div class="container">
+                <h2 class="section-title">Why Choose CareerPath AI?</h2>
+                <p>Our comprehensive platform provides everything you need to make informed career decisions</p>
+                
+                <div class="features-grid">
+                    <div class="feature-card">
+                        <div class="feature-icon">🤖</div>
+                        <h3>AI-Powered Analysis</h3>
+                        <p>Advanced psychometric testing powered by artificial intelligence</p>
+                    </div>
+                    
+                    <div class="feature-card">
+                        <div class="feature-icon">🎯</div>
+                        <h3>Personalized Recommendations</h3>
+                        <p>Get career suggestions tailored specifically to your interests and aptitude</p>
+                    </div>
+                    
+                    <div class="feature-card">
+                        <div class="feature-icon">🗺️</div>
+                        <h3>Success Roadmap</h3>
+                        <p>Detailed step-by-step guidance to achieve your career goals</p>
+                    </div>
+                    
+                    <div class="feature-card">
+                        <div class="feature-icon">🎓</div>
+                        <h3>Top Colleges & Options</h3>
+                        <p>Discover the best institutions and opportunities for your chosen path</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Us Page -->
+    <section id="about" class="page hidden">
+        <div class="container">
+            <h2 class="section-title">About CareerPath</h2>
+            
+            <div class="about-content">
+                <div class="about-text">
+                    <h3>Our Mission</h3>
+                    <p>At CareerPath, we believe that everyone deserves to find a career they're passionate about. Our mission is to help students make informed decisions about their future through advanced AI-powered assessment tools.</p>
+                    
+                    <h3>How It Works</h3>
+                    <p>Our sophisticated algorithm analyzes your interests, strengths, and learning preferences to match you with ideal career paths. We then provide a detailed roadmap to help you achieve your goals.</p>
+                    
+                    <h3>Our Team</h3>
+                    <p>We're a diverse team of psychologists, data scientists, and career counselors dedicated to helping you find your perfect career match.</p>
+                </div>
+                
+                <div class="about-image">
+                    <img src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80" alt="Team photo">
+                </div>
+            </div>
+            
+            <div style="text-align: center; margin-top: 50px;">
+                <a href="#" class="btn" onclick="checkAuthAndStart()">Start Your Assessment</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Feedback Page -->
+    <section id="feedback" class="page hidden">
+        <div class="container">
+            <center><h2 class="section-title">We'd Love Your Feedback</h2></center>
+            
+            <div class="form-container">
+                <form id="feedback-form">
+                    <div class="form-group">
+                        <label for="name">Full Name</label>
+                        <input type="text" id="name" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="email">Email Address</label>
+                        <input type="email" id="email" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="rating">Overall Rating</label>
+                        <select id="rating" required>
+                            <option value="">Select a rating</option>
+                            <option value="5">Excellent</option>
+                            <option value="4">Very Good</option>
+                            <option value="3">Good</option>
+                            <option value="2">Fair</option>
+                            <option value="1">Poor</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="comments">Your Feedback</label>
+                        <textarea id="comments" required></textarea>
+                    </div>
+                    
+                    <button type="submit" class="btn">Submit Feedback</button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- Login/Signup Page -->
+    <section id="login" class="page hidden">
+        <div class="container auth-container">
+            <div class="auth-form">
+                <div class="auth-tabs">
+                    <div class="auth-tab active" id="login-tab" onclick="switchAuthTab('login')">Login</div>
+                    <div class="auth-tab" id="signup-tab" onclick="switchAuthTab('signup')">Sign Up</div>
+                </div>
+                
+                <form id="login-form">
+                    <div class="form-group">
+                        <label for="login-email">Email</label>
+                        <input type="email" id="login-email" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="login-password">Password</label>
+                        <input type="password" id="login-password" required>
+                    </div>
+                    
+                    <div id="login-error" class="error-message hidden"></div>
+                    
+                    <button type="submit" class="btn" style="width: 100%;">Login</button>
+                </form>
+                
+                <form id="signup-form" class="hidden">
+                    <div class="form-group">
+                        <label for="signup-name">Full Name</label>
+                        <input type="text" id="signup-name" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="signup-email">Email</label>
+                        <input type="email" id="signup-email" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="signup-password">Password</label>
+                        <input type="password" id="signup-password" required minlength="6">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="signup-confirm">Confirm Password</label>
+                        <input type="password" id="signup-confirm" required>
+                    </div>
+                    
+                    <div id="signup-error" class="error-message hidden"></div>
+                    
+                    <button type="submit" class="btn" style="width: 100%;">Create Account</button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- Student Information Page -->
+    <section id="student-info" class="page hidden">
+        <div class="container">
+            <center><h2 class="section-title">Student Information</h2></center>
+            <p style="text-align: center; margin-bottom: 30px;">Tell us about yourself to get personalized career recommendations.</p>
+            
+            <div class="form-container">
+                <form id="student-info-form">
+                    <h3>Current Stage</h3>
+                    <div class="form-group">
+                        <label for="academic-level">Select Your Academic Level</label>
+                        <select id="academic-level" required onchange="toggleStreamSelection()">
+                            <option value="">Select your level</option>
+                            <option value="10th">10th Grade (Choosing Stream)</option>
+                            <option value="12th">12th Grade (Preparing for College)</option>
+                        </select>
+                    </div>
+                    
+                    <div id="stream-selection" class="hidden">
+                        <h3>Which stream interests you the most?</h3>
+                        <div class="stream-options">
+                            <div class="stream-card" onclick="selectStream('science')">
+                                <div class="stream-icon">🔬</div>
+                                <h4>Science</h4>
+                                <p>Physics, Chemistry, Biology, Mathematics</p>
+                            </div>
+                            
+                            <div class="stream-card" onclick="selectStream('commerce')">
+                                <div class="stream-icon">💼</div>
+                                <h4>Commerce</h4>
+                                <p>Accounting, Economics, Business Studies</p>
+                            </div>
+                            
+                            <div class="stream-card" onclick="selectStream('arts')">
+                                <div class="stream-icon">🎭</div>
+                                <h4>Arts</h4>
+                                <p>Literature, History, Political Science, Psychology</p>
+                            </div>
+                            
+                            <div class="stream-card" onclick="selectStream('unsure')">
+                                <div class="stream-icon">❓</div>
+                                <h4>Not Sure</h4>
+                                <p>Let AI help you discover your interests</p>
+                            </div>
+                        </div>
+                        <input type="hidden" id="selected-stream" required>
+                    </div>
+                    
+                    <div id="degree-selection" class="hidden">
+                        <h3>Which degree program are you interested in?</h3>
+                        <div class="degree-options">
+                            <div class="degree-card" onclick="selectDegree('engineering')">
+                                <div class="degree-icon">⚙️</div>
+                                <h4>Engineering</h4>
+                                <p>Computer Science, Mechanical, Electrical, Civil</p>
+                            </div>
+                            
+                            <div class="degree-card" onclick="selectDegree('medical')">
+                                <div class="degree-icon">🩺</div>
+                                <h4>Medical</h4>
+                                <p>MBBS, Dentistry, Pharmacy, Nursing</p>
+                            </div>
+                            
+                            <div class="degree-card" onclick="selectDegree('business')">
+                                <div class="degree-icon">📊</div>
+                                <h4>Business</h4>
+                                <p>BBA, MBA, Finance, Marketing</p>
+                            </div>
+                            
+                            <div class="degree-card" onclick="selectDegree('arts')">
+                                <div class="degree-icon">🎨</div>
+                                <h4>Arts & Humanities</h4>
+                                <p>Literature, History, Psychology, Sociology</p>
+                            </div>
+                            
+                            <div class="degree-card" onclick="selectDegree('law')">
+                                <div class="degree-icon">⚖️</div>
+                                <h4>Law</h4>
+                                <p>LLB, LLM, Corporate Law, Criminal Law</p>
+                            </div>
+                            
+                            <div class="degree-card" onclick="selectDegree('design')">
+                                <div class="degree-icon">🎨</div>
+                                <h4>Design</h4>
+                                <p>Graphic Design, Fashion, Interior, Architecture</p>
+                            </div>
+                        </div>
+                        <input type="hidden" id="selected-degree" required>
+                    </div>
+                    
+                    <div style="text-align: center; margin-top: 30px;">
+                        <button type="submit" class="btn">Start Career Test</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- Assessment Page -->
+    <section id="assessment" class="page hidden">
+        <div class="container">
+            <h2 class="section-title">Career Assessment Test</h2>
+            
+            <div class="progress-bar">
+                <div class="progress" id="progress-bar" style="width: 10%;"></div>
+            </div>
+            
+            <div class="question-container">
+                <h3 id="question-number">Question 1 of 10</h3>
+                <p id="question-text">What type of activities do you enjoy most?</p>
+                
+                <div class="options-container" id="options-container">
+                    <!-- Options will be inserted by JavaScript -->
+                </div>
+            </div>
+            
+            <div class="navigation-buttons">
+                <button class="btn" id="prev-btn" style="visibility: hidden;">Previous</button>
+                <button class="btn" id="next-btn">Next →</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Results Page -->
+    <section id="results" class="page hidden">
+        <div class="container">
+            <center><h2 class="section-title">Your Career Recommendation</h2></center>
+            <p>Based on your psychometric analysis</p><p></p>
+            
+            <div class="results-container">
+                <div class="match-percentage" id="match-percentage">92% Match</div>
+                <h3 id="career-title">Career Recommendation</h3>
+                <p id="career-description">Based on your interests, skills, and preferences.</p>
+                
+                <div class="chart-container">
+                    <canvas id="career-chart"></canvas>
+                </div>
+                
+                <div class="roadmap" id="roadmap-container">
+                    <h3>Roadmap for You</h3>
+                    <p>Your personalized path to success</p>
+                    
+                    <!-- Roadmap steps will be inserted by JavaScript -->
+                </div>
+                
+                <div style="margin-top: 40px; text-align: center;">
+                    <button class="btn" id="download-btn">Download Report</button>
+                    <button class="btn" id="retake-btn" style="background: #f44336;">Retake Test</button>
+                </div>
+            </div>
+            
+            <div style="margin-top: 50px; text-align: center;">
+                <h3>Recommended Video Resources</h3>
+                <div style="display: flex; justify-content: center; flex-wrap: wrap; gap: 20px; margin-top: 20px;" id="video-resources">
+                    <!-- Video resources will be inserted by JavaScript -->
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- History Page -->
+    <section id="history" class="page hidden">
+        <div class="container">
+            <center><h2 class="section-title">Your Assessment History</h2></center>
+            
+            <div class="history-container" id="history-container">
+                <p style="text-align: center;">You haven't taken any assessments yet.</p>
+            </div>
+            
+            <div class="history-buttons">
+                <button class="btn" onclick="showPage('home')">Back to Home</button>
+                <button class="btn" id="clear-history-btn" style="background: #f44336;" onclick="clearHistory()">Clear History</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Theme Switcher -->
+    <div class="theme-switcher" id="theme-switcher">
+        <div class="theme-icon" id="theme-icon">🌙</div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

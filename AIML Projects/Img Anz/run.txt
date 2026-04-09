@@ -1,0 +1,2 @@
+To run Image Analyzer:
+.\.venv\Scripts\python -m streamlit run app.py

@@ -1,0 +1,6 @@
+psutil
+pyttsx3
+pywhatkit
+reportlab
+requests
+speech_recognition
