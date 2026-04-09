@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ScriptSeekers Academy | AI Study Insights</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="dashboard-container">
+        <header>
+            <div class="logo-area">
+                <h1>ScriptSeekers<span>Academy</span></h1>
+            </div>
+            <div class="user-nav">
+                <span>Welcome, {{ session.username }}</span>
+                <a href="{{ url_for('history') }}" class="btn-logout" style="text-decoration: none;">History</a>
+                <a href="{{ url_for('logout') }}" class="btn-logout" style="text-decoration: none;">Logout</a>
+            </div>
+        </header>
+
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                {% for category, message in messages %}
+                    <div class="alert alert-{{ category }}" style="background: rgba(255,255,255,0.05); padding: 15px; border-radius: 12px; margin-bottom: 20px; border-left: 4px solid var(--primary);">
+                        {{ message }}
+                    </div>
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
+
+        <div class="dash-grid">
+            <div class="main-column">
+                <div class="card">
+                    <h2>Generate Your Study Plan</h2>
+                    <form method="post" onsubmit="return validateForm()">
+                        <div class="form-columns">
+                            <div class="form-column">
+                                <label for="name">Full Name</label>
+                                <input type="text" id="name" name="name" placeholder="John Doe" required>
+                                
+                                <label for="age">Age</label>
+                                <input type="number" id="age" name="age" min="10" max="100" placeholder="20" required>
+                                
+                                <label for="subjects">Subjects</label>
+                                <input type="text" id="subjects" name="subjects" placeholder="Math, Science, History" required>
+                                
+                                <label for="hours_per_day">Study Hours/Day</label>
+                                <input type="number" id="hours_per_day" name="hours_per_day" min="1" max="24" placeholder="4" required>
+                            </div>
+                            
+                            <div class="form-column">
+                                <label for="time_slots">Preferred Time Slots</label>
+                                <input type="text" id="time_slots" name="time_slots" placeholder="9-11 AM, 3-5 PM" required>
+                                
+                                <label for="short_term_goal">Short Term Goal</label>
+                                <input type="text" id="short_term_goal" name="short_term_goal" placeholder="Pass Midterms" required>
+                                
+                                <label for="long_term_goal">Long Term Goal</label>
+                                <input type="text" id="long_term_goal" name="long_term_goal" placeholder="Become an Engineer" required>
+                                
+                                <label for="study_style">Study Style</label>
+                                <select id="study_style" name="study_style" required>
+                                    <option value="Visual">Visual</option>
+                                    <option value="Auditory">Auditory</option>
+                                    <option value="Kinesthetic">Kinesthetic</option>
+                                    <option value="Reading/Writing">Reading/Writing</option>
+                                </select>
+                            </div>
+                        </div>
+                        <button type="submit">Generate AI Study Plan</button>
+                    </form>
+                </div>
+            </div>
+
+            <div class="side-column">
+                <div class="card pomodoro">
+                    <h2>Focus Mode</h2>
+                    <div class="timer-circle">
+                        <div class="timer-display" id="timer">25:00</div>
+                    </div>
+                    <div class="timer-controls">
+                        <button class="btn-timer" id="timer-toggle">Start</button>
+                        <button class="btn-timer" style="background: var(--border);" id="timer-reset">Reset</button>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <h2>Recent Sessions</h2>
+                    <div style="font-size: 0.9rem; color: var(--text-dim);">
+                        Your last study plan was generated for <strong>Mathematics</strong>.
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function validateForm() {
+            const hours = document.getElementById('hours_per_day');
+            if (hours.value < 1 || hours.value > 24) {
+                alert('Please enter valid study hours (1-24)');
+                return false;
+            }
+            return true;
+        }
+
+        // Simple Pomodoro Logic
+        let timeLeft = 1500;
+        let timerId = null;
+        const timerDisplay = document.getElementById('timer');
+        const timerToggle = document.getElementById('timer-toggle');
+
+        timerToggle.onclick = () => {
+            if (timerId) {
+                clearInterval(timerId);
+                timerId = null;
+                timerToggle.textContent = 'Start';
+            } else {
+                timerId = setInterval(() => {
+                    timeLeft--;
+                    let mins = Math.floor(timeLeft / 60);
+                    let secs = timeLeft % 60;
+                    timerDisplay.textContent = `${mins}:${secs < 10 ? '0' : ''}${secs}`;
+                    if (timeLeft <= 0) {
+                        clearInterval(timerId);
+                        alert('Time is up! Take a break.');
+                    }
+                }, 1000);
+                timerToggle.textContent = 'Pause';
+            }
+        };
+
+        document.getElementById('timer-reset').onclick = () => {
+            clearInterval(timerId);
+            timerId = null;
+            timeLeft = 1500;
+            timerDisplay.textContent = '25:00';
+            timerToggle.textContent = 'Start';
+        };
+    </script>
+</body>
+</html>

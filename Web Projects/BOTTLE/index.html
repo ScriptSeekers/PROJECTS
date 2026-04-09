@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ScriptSeekers Bottle Hunt | Premium Social Game</title>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="luxury-bg"></div>
+    <div class="container">
+        <header>
+            <div class="logo">ScriptSeekers<span>BOTTLE</span></div>
+            <p>The Ultimate Truth or Dare Experience</p>
+        </header>
+
+        <main class="game-area">
+            <div class="table-surface">
+                <div class="player-slots">
+                    <div class="slot p1 active" data-name="Arpit">AV</div>
+                    <div class="slot p2" data-name="Guest">?</div>
+                    <div class="slot p3" data-name="Friend">F</div>
+                    <div class="slot p4" data-name="Other">O</div>
+                </div>
+                
+                <div class="bottle-container" id="bottle">
+                    <div class="bottle">
+                        <div class="bottle-label">S</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="game-controls">
+                <button id="spin-btn">SPIN NOW</button>
+            </div>
+        </main>
+
+        <section id="action-modal" class="hidden">
+            <div class="modal-content">
+                <h2 id="target-player">Selected: Rahul</h2>
+                <div class="options">
+                    <button class="btn-truth">Truth</button>
+                    <button class="btn-dare">Dare</button>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <script src="game.js"></script>
+    <footer style="
+        position:fixed;
+        bottom:10px;
+        left:0;
+        width:100%;
+        text-align:center;
+        font-size:12px;
+        opacity:0.6;
+        pointer-events:none;
+        color: rgba(255,255,255,0.5);
+    ">
+        © 2025 Arpit Vishwakarma AKA ScriptSeekers
+    </footer>
+</body>
+</html>

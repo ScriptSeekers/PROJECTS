@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registration | ScriptSeekers Academy</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="login-container" style="max-width: 500px;">
+        <div class="logo-area" style="text-align: center; margin-bottom: 2rem;">
+            <h1 style="font-size: 1.8rem; font-weight: 800;">ScriptSeekers<span>Academy</span></h1>
+        </div>
+
+        <h2>Create Account</h2>
+        
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                {% for category, message in messages %}
+                    <div class="alert alert-{{ category }}">{{ message }}</div>
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
+        
+        <form method="post">
+            <div class="form-group">
+                <label for="username">Username</label>
+                <input type="text" id="username" name="username" value="{{ username or '' }}" placeholder="student_01" required>
+            </div>
+            
+            <div class="form-group">
+                <label for="email">Email Address</label>
+                <input type="email" id="email" name="email" value="{{ email or '' }}" placeholder="you@example.com" required>
+            </div>
+            
+            <div class="form-group">
+                <label for="password">Password</label>
+                <input type="password" id="password" name="password" placeholder="••••••••" required>
+            </div>
+            
+            <div class="form-group">
+                <label for="confirm_password">Confirm Password</label>
+                <input type="password" id="confirm_password" name="confirm_password" placeholder="••••••••" required>
+            </div>
+            
+            {% if not show_otp_field %}
+            <button type="submit" name="request_otp">Send Verification OTP</button>
+            {% endif %}
+            
+            {% if show_otp_field %}
+            <div class="otp-section">
+                <label for="otp">Security OTP</label>
+                <div class="otp-input">
+                    <input type="text" id="otp" name="otp" placeholder="Enter 6-digit code" required>
+                    <button type="submit" name="request_otp" style="width: auto; padding: 12px 20px;">Resend</button>
+                </div>
+                <div class="timer" id="otp-timer">Request expires in: <span id="countdown">10:00</span></div>
+                <button type="submit" name="verify_otp">Complete Registration</button>
+            </div>
+            {% endif %}
+        </form>
+        
+        <p style="text-align: center; margin-top: 30px; color: var(--text-dim); font-size: 0.9rem;">
+            Already have an account? <a href="{{ url_for('login') }}" style="color: var(--primary-light); text-decoration: none; font-weight: 700;">Sign In</a>
+        </p>
+    </div>
+    
+    {% if show_otp_field %}
+    <script>
+        let countdownDate = new Date().getTime() + (10 * 60 * 1000);
+        let countdownFunction = setInterval(function() {
+            let now = new Date().getTime();
+            let distance = countdownDate - now;
+            let minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+            let seconds = Math.floor((distance % (1000 * 60)) / 1000);
+            document.getElementById("countdown").innerHTML = 
+                minutes.toString().padStart(2, '0') + ":" + seconds.toString().padStart(2, '0');
+            if (distance < 0) {
+                clearInterval(countdownFunction);
+                document.getElementById("countdown").innerHTML = "EXPIRED";
+                document.querySelector('button[name="verify_otp"]').disabled = true;
+            }
+        }, 1000);
+    </script>
+    {% endif %}
+    
+    <script src="{{ url_for('static', filename='theme.js') }}"></script>
+</body>
+</html>

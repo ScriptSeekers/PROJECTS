@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Study Plan - ScriptSeekers Academy</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        /* Hide the full plan content */
+        .plan-content {
+            display: none;
+        }
+        
+        /* Styling for day schedule display */
+        .day-schedule {
+            background: var(--plan-bg);
+            padding: 20px;
+            border-radius: 8px;
+            margin: 20px 0;
+            min-height: 200px;
+            border: 1px solid var(--border-color);
+        }
+        
+        .day-header {
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid var(--accent-color);
+        }
+        
+        .day-header h3 {
+            margin: 0;
+            color: var(--accent-color);
+            text-align: left;
+        }
+        
+        .visual-task {
+            background: rgba(108, 99, 255, 0.1);
+            padding: 10px 15px;
+            margin: 8px 0;
+            border-radius: 6px;
+            border-left: 4px solid var(--accent-color);
+        }
+        
+        .no-tasks {
+            text-align: center;
+            padding: 40px 20px;
+            color: var(--text-secondary);
+            font-style: italic;
+        }
+        
+        /* Updated day buttons container */
+        .day-buttons-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 8px;
+            margin-bottom: 20px;
+        }
+        
+        /* Smaller day buttons */
+        .day-button {
+            background: var(--accent-color);
+            color: white;
+            padding: 8px 12px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 500;
+            font-size: 0.85rem;
+            min-width: 70px;
+            text-align: center;
+            flex: 1;
+            max-width: calc(25% - 8px); /* 4 buttons per row accounting for gap */
+        }
+        
+        .day-button:hover {
+            background: var(--accent-hover);
+            transform: translateY(-2px);
+        }
+        
+        .day-button.active {
+            background: var(--accent-hover);
+            font-weight: bold;
+            transform: scale(1.05);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+        
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            .day-button {
+                max-width: calc(50% - 8px); /* 2 buttons per row on mobile */
+                font-size: 0.8rem;
+                padding: 6px 10px;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .day-button {
+                max-width: 100%; /* 1 button per row on very small screens */
+            }
+        }
+    </style>
+</head>
+<body>
+    <img id="theme-logo" src="{{ url_for('static', filename='logo.png') }}" alt="ScriptSeekers Academy" class="app-logo" align="left">
+    <div class="container">
+        <h2>Your AI-Generated Study Plan</h2>
+        
+        <div class="day-buttons-container">
+            <button class="day-button" onclick="showDaySchedule('Monday')">Monday</button>
+            <button class="day-button" onclick="showDaySchedule('Tuesday')">Tuesday</button>
+            <button class="day-button" onclick="showDaySchedule('Wednesday')">Wednesday</button>
+            <button class="day-button" onclick="showDaySchedule('Thursday')">Thursday</button>
+            <button class="day-button" onclick="showDaySchedule('Friday')">Friday</button>
+            <button class="day-button" onclick="showDaySchedule('Saturday')">Saturday</button>
+            <button class="day-button" onclick="showDaySchedule('Sunday')">Sunday</button>
+            <button class="day-button" onclick="showTodaySchedule()">Today</button>
+        </div>
+        
+        <div id="day-schedule" class="day-schedule">
+            <div class="no-tasks">Select a day to view your schedule</div>
+        </div>
+        
+        <!-- The full weekly schedule is hidden with CSS -->
+        <div class="plan-content">
+            {{ plan|safe }}
+        </div>
+        
+        <div class="action-links">
+            <a href="{{ url_for('dashboard') }}">Create New Plan</a> | 
+            <a href="{{ url_for('history') }}">View History</a> | 
+            <a href="{{ url_for('logout') }}">Logout</a>
+        </div>
+    </div>
+    
+    <script>
+        // Store the parsed daily tasks globally
+        let dailyTasks = {};
+        
+        // Function to parse study plan and extract tasks by day
+        function parseStudyPlan(planText) {
+            const days = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"];
+            const parsedTasks = {};
+            
+            days.forEach(day => {
+                parsedTasks[day] = [];
+                // Look for the day heading followed by content until next day or end
+                const dayRegex = new RegExp(`${day}:\\s*([\\s\\S]*?)(?=${days.join(':|')}|$)`, 'i');
+                const match = planText.match(dayRegex);
+                
+                if (match && match[1]) {
+                    // Split into tasks and clean up
+                    const dayContent = match[1].trim();
+                    const tasks = dayContent.split('\n').filter(line => line.trim() && !line.match(/^\s*$/));
+                    parsedTasks[day] = tasks.map(task => task.replace(/^[-•*]\s*/, '').trim());
+                }
+            });
+            
+            return parsedTasks;
+        }
+        
+        // Function to show a specific day's schedule
+        function showDaySchedule(dayName) {
+            const dayScheduleEl = document.getElementById('day-schedule');
+            
+            // Update active button
+            document.querySelectorAll('.day-button').forEach(btn => {
+                btn.classList.remove('active');
+                if (btn.textContent === dayName.slice(0, 3) || 
+                    (btn.textContent === 'Today' && dayName === getTodayName())) {
+                    btn.classList.add('active');
+                }
+            });
+            
+            if (dailyTasks[dayName] && dailyTasks[dayName].length > 0) {
+                let scheduleHTML = `<div class="day-header"><h3>${dayName}'s Schedule</h3></div>`;
+                
+                dailyTasks[dayName].forEach(task => {
+                    scheduleHTML += `<div class="visual-task">${task}</div>`;
+                });
+                
+                dayScheduleEl.innerHTML = scheduleHTML;
+            } else {
+                dayScheduleEl.innerHTML = `<div class="no-tasks">No specific tasks scheduled for ${dayName}</div>`;
+            }
+        }
+        
+        // Helper function to get today's name
+        function getTodayName() {
+            const days = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+            const today = new Date().getDay();
+            return days[today];
+        }
+        
+        // Function to show today's schedule
+        function showTodaySchedule() {
+            const todayName = getTodayName();
+            
+            const dayScheduleEl = document.getElementById('day-schedule');
+            
+            // Update active button
+            document.querySelectorAll('.day-button').forEach(btn => {
+                btn.classList.remove('active');
+                if (btn.textContent === 'Today') {
+                    btn.classList.add('active');
+                }
+            });
+            
+            if (dailyTasks[todayName] && dailyTasks[todayName].length > 0) {
+                let scheduleHTML = `<div class="day-header"><h3>Today's Schedule (${todayName})</h3></div>`;
+                
+                dailyTasks[todayName].forEach(task => {
+                    scheduleHTML += `<div class="visual-task">${task}</div>`;
+                });
+                
+                dayScheduleEl.innerHTML = scheduleHTML;
+            } else {
+                dayScheduleEl.innerHTML = `<div class="no-tasks">No specific tasks scheduled for ${todayName}</div>`;
+            }
+        }
+        
+        // Initialize when page loads
+        document.addEventListener('DOMContentLoaded', function() {
+            // Parse the study plan but don't display the full content
+            const planText = document.querySelector('.plan-content')?.textContent;
+            if (planText) {
+                dailyTasks = parseStudyPlan(planText);
+                
+                // Auto-show today's schedule
+                setTimeout(() => {
+                    showTodaySchedule();
+                }, 100);
+            }
+        });
+    </script>
+    <script src="{{ url_for('static', filename='theme.js') }}"></script>
+    <footer style="text-align: center; padding: 20px; opacity: 0.5; font-size: 0.8rem;">
+        © 2025 Arpit Vishwakarma AKA ScriptSeekers
+    </footer>
+</body>
+</html>

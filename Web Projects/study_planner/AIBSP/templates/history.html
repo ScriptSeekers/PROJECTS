@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Study Plan History - ScriptSeekers Academy</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <img id="theme-logo" src="{{ url_for('static', filename='logo.png') }}" alt="ScriptSeekers Academy" class="app-logo" align="left">
+    <div class="container">
+        <h2>Your Study Plan History</h2>
+        
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                {% for category, message in messages %}
+                    <div class="alert alert-{{ category }}">{{ message }}</div>
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
+        
+        {% if plans %}
+            <table class="plans-table">
+                <thead>
+                    <tr>
+                        <th>Plan Name</th>
+                        <th>Subjects</th>
+                        <th>Created Date</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for plan in plans %}
+                    <tr>
+                        <td>{{ plan.name }}</td>
+                        <td>{{ plan.subjects }}</td>
+                        <td>{{ plan.created_at.strftime('%Y-%m-%d %H:%M') }}</td>
+                        <td>
+                            <a href="{{ url_for('view_plan', plan_id=plan.id) }}">View</a> | 
+                            <a href="{{ url_for('delete_plan', plan_id=plan.id) }}" 
+                               onclick="return confirm('Are you sure you want to delete this study plan?')">Delete</a>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        {% else %}
+            <p>You haven't created any study plans yet.</p>
+        {% endif %}
+        
+        <div class="action-links">
+            <a href="{{ url_for('dashboard') }}">Back to Dashboard</a> | 
+            <a href="{{ url_for('logout') }}">Logout</a>
+        </div>
+    </div>
+    <script src="{{ url_for('static', filename='theme.js') }}"></script>
+</body>
+</html>

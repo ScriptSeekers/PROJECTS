@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ScriptSeekers+ | Premium Inquiry Form</title>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <div class="split-layout">
+        <div class="brand-side">
+            <div class="brand-content">
+                <div class="logo">ScriptSeekers+</div>
+                <h1>Let's build something <span>incredible</span> together.</h1>
+                <p>Tell us about your project and we'll get back to you within 24 hours.</p>
+
+                <div class="social-proof">
+                    <div class="avatars">
+                        <img src="https://i.pravatar.cc/100?u=1" alt="User">
+                        <img src="https://i.pravatar.cc/100?u=2" alt="User">
+                        <img src="https://i.pravatar.cc/100?u=3" alt="User">
+                    </div>
+                    <p>Trusted by 500+ global brands</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="form-side">
+            <form id="inquiry-form">
+                <div class="form-step">
+                    <h2>01. Contact Information</h2>
+                    <div class="input-grid">
+                        <div class="input-group">
+                            <input type="text" id="name" required placeholder=" ">
+                            <label>Full Name</label>
+                        </div>
+                        <div class="input-group">
+                            <input type="email" id="email" required placeholder=" ">
+                            <label>Email Address</label>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-step">
+                    <h2>02. Project Details</h2>
+                    <div class="input-group">
+                        <select id="service">
+                            <option value="" disabled selected>Select Service</option>
+                            <option value="design">UI/UX Design</option>
+                            <option value="dev">Web Development</option>
+                            <option value="marketing">Digital Marketing</option>
+                        </select>
+                    </div>
+                    <div class="input-group">
+                        <textarea id="message" rows="4" required placeholder=" "></textarea>
+                        <label>Message / Requirements</label>
+                    </div>
+                </div>
+
+                <button type="submit" class="cta-btn">Send Inquiry</button>
+            </form>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+    <footer style="
+        position:fixed;
+        bottom:10px;
+        left:20px;
+        font-size:12px;
+        opacity:0.6;
+        pointer-events:none;
+        color: var(--text-muted);
+    ">
+        © 2025 Arpit Vishwakarma AKA ScriptSeekers
+    </footer>
+</body>
+
+</html>

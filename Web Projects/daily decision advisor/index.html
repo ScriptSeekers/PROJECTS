@@ -1,0 +1,657 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Daily Oracle | Cosmic Guidance</title>
+    <!-- Premium Typography -->
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@100;300;400;600;700&family=Plus+Jakarta+Sans:wght@200;400;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-deep: #050510;
+            --accent-primary: #00f2ff;
+            --accent-secondary: #7000ff;
+            --text-main: #ffffff;
+            --text-muted: rgba(255, 255, 255, 0.6);
+            --glass-bg: rgba(255, 255, 255, 0.03);
+            --glass-border: rgba(255, 255, 255, 0.1);
+            --glass-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.8);
+            --transition-speed: 0.4s;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            outline: none;
+        }
+
+        body {
+            font-family: 'Outfit', sans-serif;
+            background-color: var(--bg-deep);
+            color: var(--text-main);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow-x: hidden;
+            perspective: 1000px;
+        }
+
+        /* --- Animated Cosmic Background --- */
+        .cosmos {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            background: radial-gradient(circle at center, #101030 0%, #050510 100%);
+            overflow: hidden;
+        }
+
+        .orb {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(80px);
+            opacity: 0.4;
+            animation: float 20s infinite alternate ease-in-out;
+        }
+
+        .orb-1 {
+            width: 400px;
+            height: 400px;
+            background: var(--accent-secondary);
+            top: -100px;
+            right: -100px;
+        }
+
+        .orb-2 {
+            width: 350px;
+            height: 350px;
+            background: var(--accent-primary);
+            bottom: -50px;
+            left: -50px;
+            animation-delay: -5s;
+        }
+
+        @keyframes float {
+            0% { transform: translate(0, 0) scale(1); }
+            100% { transform: translate(50px, 100px) scale(1.2); }
+        }
+
+        /* --- Main Container --- */
+        .container {
+            width: 100%;
+            max-width: 500px;
+            padding: 20px;
+            z-index: 10;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 40px;
+            animation: fadeInDown 1s cubic-bezier(0.23, 1, 0.32, 1);
+        }
+
+        header h1 {
+            font-size: 2.8rem;
+            font-weight: 700;
+            letter-spacing: -1px;
+            background: linear-gradient(to right, #fff, var(--accent-primary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 8px;
+        }
+
+        header p {
+            font-size: 1rem;
+            color: var(--text-muted);
+            font-weight: 300;
+        }
+
+        /* --- Cards --- */
+        .glass-card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid var(--glass-border);
+            border-radius: 24px;
+            padding: 40px;
+            box-shadow: var(--glass-shadow);
+            transition: transform var(--transition-speed), opacity var(--transition-speed);
+        }
+
+        .hidden {
+            display: none !important;
+            opacity: 0;
+            transform: scale(0.95);
+        }
+
+        /* --- Form Elements --- */
+        .form-group {
+            margin-bottom: 30px;
+            position: relative;
+        }
+
+        .form-group label {
+            display: block;
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--text-muted);
+            margin-bottom: 10px;
+            font-weight: 600;
+        }
+
+        input[type="text"] {
+            width: 100%;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--glass-border);
+            border-radius: 12px;
+            padding: 14px 18px;
+            color: #fff;
+            font-family: inherit;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        input[type="text"]:focus {
+            border-color: var(--accent-primary);
+            background: rgba(255, 255, 255, 0.08);
+            box-shadow: 0 0 15px rgba(0, 242, 255, 0.2);
+        }
+
+        /* Custom Dropdown House */
+        .custom-select {
+            position: relative;
+            cursor: pointer;
+        }
+
+        .select-trigger {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--glass-border);
+            border-radius: 12px;
+            padding: 14px 18px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: all 0.3s ease;
+        }
+
+        .select-trigger:hover {
+            border-color: var(--glass-border);
+            background: rgba(255, 255, 255, 0.08);
+        }
+
+        .select-trigger.active {
+            border-color: var(--accent-secondary);
+        }
+
+        .options-panel {
+            position: absolute;
+            top: calc(100% + 10px);
+            left: 0;
+            width: 100%;
+            background: #0a0a1a;
+            border: 1px solid var(--glass-border);
+            border-radius: 12px;
+            overflow: hidden;
+            display: none;
+            z-index: 100;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+        }
+
+        .options-panel.show {
+            display: block;
+            animation: slideIn 0.3s ease;
+        }
+
+        .option {
+            padding: 14px 18px;
+            transition: background 0.2s;
+        }
+
+        .option:hover {
+            background: var(--accent-secondary);
+        }
+
+        /* --- Buttons --- */
+        .btn-primary {
+            width: 100%;
+            background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
+            border: none;
+            border-radius: 14px;
+            padding: 16px;
+            color: #fff;
+            font-family: inherit;
+            font-weight: 600;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            box-shadow: 0 10px 20px rgba(112, 0, 255, 0.3);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 30px rgba(112, 0, 255, 0.5);
+        }
+
+        .btn-primary:active {
+            transform: translateY(0);
+        }
+
+        /* --- Result Section --- */
+        .result-header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .result-header h2 {
+            font-size: 1.8rem;
+            margin-bottom: 10px;
+        }
+
+        .badge {
+            display: inline-block;
+            padding: 6px 16px;
+            background: rgba(0, 242, 255, 0.1);
+            border: 1px solid var(--accent-primary);
+            color: var(--accent-primary);
+            border-radius: 50px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .advice-stack {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .advice-item {
+            padding: 20px;
+            background: rgba(255, 255, 255, 0.04);
+            border-radius: 16px;
+            border-left: 4px solid var(--accent-primary);
+        }
+
+        .advice-item.avoid { border-left-color: #ff4b4b; }
+        .advice-item.time { border-left-color: var(--accent-secondary); }
+
+        .advice-item h3 {
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            color: var(--text-muted);
+            margin-bottom: 8px;
+            letter-spacing: 1.5px;
+        }
+
+        .advice-item p {
+            font-size: 1.05rem;
+            line-height: 1.6;
+            font-weight: 300;
+        }
+
+        .btn-reset {
+            margin-top: 30px;
+            background: transparent;
+            border: 1px solid var(--glass-border);
+            width: 100%;
+            padding: 14px;
+            color: var(--text-muted);
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .btn-reset:hover {
+            color: #fff;
+            border-color: #fff;
+        }
+
+        /* --- Animations --- */
+        @keyframes fadeInDown {
+            from { opacity: 0; transform: translateY(-30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes slideIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Toast Notification */
+        #toast {
+            position: fixed;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(255, 75, 75, 0.9);
+            padding: 12px 24px;
+            border-radius: 8px;
+            font-size: 0.9rem;
+            z-index: 1000;
+            display: none;
+        }
+
+        @media (max-width: 480px) {
+            .container { padding: 15px; }
+            .glass-card { padding: 30px 20px; }
+            header h1 { font-size: 2.2rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="cosmos" id="cosmos">
+        <div class="orb orb-1"></div>
+        <div class="orb orb-2"></div>
+    </div>
+
+    <div class="container">
+        <header>
+            <h1>Daily Oracle</h1>
+            <p>Cosmic patterns decoded for your soul.</p>
+        </header>
+
+        <!-- Input Card -->
+        <div class="glass-card" id="input-card">
+            <div class="form-group">
+                <label>Identify Yourself</label>
+                <input type="text" id="user-name" placeholder="Name or Spirit Alias" autocomplete="off">
+            </div>
+
+            <div class="form-group">
+                <label>Arrival Date (DD / MM)</label>
+                <input type="text" id="dob" placeholder="21 / 03" maxlength="7" autocomplete="off">
+            </div>
+
+            <div class="form-group">
+                <label>Present Frequency</label>
+                <div class="custom-select" id="mood-select">
+                    <div class="select-trigger">
+                        <span id="mood-label">Select Mood</span>
+                        <svg width="12" height="8" viewBox="0 0 12 8" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 1l5 5 5-5"/></svg>
+                    </div>
+                    <div class="options-panel">
+                        <div class="option" data-value="Focused">Focused</div>
+                        <div class="option" data-value="Tired">Tired</div>
+                        <div class="option" data-value="Stressed">Stressed</div>
+                        <div class="option" data-value="Lazy">Lazy</div>
+                    </div>
+                </div>
+            </div>
+
+            <button class="btn-primary" id="btn-reveal">Consult the Heavens</button>
+        </div>
+
+        <!-- Result Card -->
+        <div class="glass-card hidden" id="result-card">
+            <div class="result-header">
+                <h2>Peace be with you, <span id="res-name">User</span></h2>
+                <div class="badge" id="res-zodiac">Aries | Fire</div>
+            </div>
+
+            <div class="advice-stack">
+                <div class="advice-item">
+                    <h3>The Path Forward</h3>
+                    <p id="res-focus"></p>
+                </div>
+                <div class="advice-item avoid">
+                    <h3>Guardian Warning</h3>
+                    <p id="res-avoid"></p>
+                </div>
+                <div class="advice-item time">
+                    <h3>Temporal Strategy</h3>
+                    <p id="res-time"></p>
+                </div>
+            </div>
+
+            <button class="btn-reset" id="btn-reset">Return to the Void</button>
+        </div>
+    </div>
+
+    <div id="toast">Invalid alignment. Check your dates.</div>
+
+    <script>
+        // --- DATA ENGINE ---
+        const ZODIAC_DATES = [
+            [[3, 21], [4, 19], 'Aries', 'Fire'],
+            [[4, 20], [5, 20], 'Taurus', 'Earth'],
+            [[5, 21], [6, 20], 'Gemini', 'Air'],
+            [[6, 21], [7, 22], 'Cancer', 'Water'],
+            [[7, 23], [8, 22], 'Leo', 'Fire'],
+            [[8, 23], [9, 22], 'Virgo', 'Earth'],
+            [[9, 23], [10, 22], 'Libra', 'Air'],
+            [[10, 23], [11, 21], 'Scorpio', 'Water'],
+            [[11, 22], [12, 21], 'Sagittarius', 'Fire'],
+            [[12, 22], [1, 19], 'Capricorn', 'Earth'],
+            [[1, 20], [2, 18], 'Aquarius', 'Air'],
+            [[2, 19], [3, 20], 'Pisces', 'Water']
+        ];
+
+        const ADVICE_DB = {
+            "Fire": {
+                "Focused": {
+                    "focus": ["Channel your dynamic energy into your single most ambitious goal.", "Take bold leadership on a project you've been putting off.", "Use your natural momentum to knock out high-impact tasks fast.", "Initiate that hard conversation or risky move today."],
+                    "avoid": ["Burning out by taking on too many tasks at once.", "Ignoring others' input because you're moving too fast.", "Skipping the planning phase in your rush to execute.", "Impatience with people who operate slower than you."],
+                    "time": ["Sprint in 60-minute blocks, then completely step away.", "Tackle your absolute hardest task before noon.", "Set strict timers to prevent hyper-focusing too long on one thing."]
+                },
+                "Tired": {
+                    "focus": ["Step back and let your natural creativity recharge.", "Do light planning instead of forcing yourself to take heavy action.", "Reflect on your recent wins to reignite your spark.", "Delegate tasks that don't require your specific flair."],
+                    "avoid": ["Forcing enthusiasm when your tank is totally empty.", "Making sudden, impulsive changes just to feel something.", "Picking fights or starting drama out of sheer boredom.", "Committing to new social events you don't have energy for."],
+                    "time": ["Rest now; your energy bursts are better when fully restored.", "Take mini-breaks every 30 minutes to stretch and reset.", "Call it a day early if possible. Tomorrow is another sprint."]
+                },
+                "Stressed": {
+                    "focus": ["Burn off anxious energy with intense physical movement.", "Write down what is bothering you and aggressively cross off solved issues.", "Focus purely on one immediate, controllable task.", "Find an outlet for your frustration that isn't work-related."],
+                    "avoid": ["Lashing out at people who are just trying to help.", "Making permanent decisions based on temporary anger.", "Overworking yourself as a coping mechanism.", "Ignoring your physical needs in pursuit of false progress."],
+                    "time": ["Step away for 20 minutes right now to cool off.", "Block out an hour strictly for a workout or fast walk.", "Don't compress your schedule; give yourself buffer time today."]
+                },
+                "Lazy": {
+                    "focus": ["Find the competitive angle in your boring tasks to stay engaged.", "Challenge yourself to do just 10 minutes of intense work.", "Focus on a side project that naturally excites you.", "Gamify your to-do list to spark your competitive streak."],
+                    "avoid": ["Letting guilt consume you for resting.", "Doomscrolling which only drains your residual passion.", "Over-promising deliverables you have no intention of starting.", "Starting five different things and finishing zero."],
+                    "time": ["Race the clock: try to finish one chore in 5 minutes.", "Wait for the late afternoon second-wind to hit.", "Do the absolute bare minimum, then intentionally unplug."]
+                }
+            },
+            "Earth": {
+                "Focused": {
+                    "focus": ["Build practical systems that will save you time all week.", "Dive deep into financial planning or structural work.", "Organize your environment; your mind will sharpen further.", "Execute on the detailed tasks others might find too tedious."],
+                    "avoid": ["Getting so stuck in the details that you miss the bigger strategy.", "Refusing to pivot if a faster, better method appears.", "Over-polishing something that is already 'good enough'.", "Isolating yourself too much from your team's feedback."],
+                    "time": ["Settle in for a long, unbroken 2-hour deep work session.", "Knock out your administrative tasks right after lunch.", "Keep a rigid schedule today; it will serve you exceptionally well."]
+                },
+                "Tired": {
+                    "focus": ["Stick strictly to the routine; let muscle memory take over.", "Reorganize your workspace instead of doing heavy brain-work.", "Look at your long-term goals to ground yourself.", "Focus on physical comforts: good food, water, structured rest."],
+                    "avoid": ["Being overly critical or harsh on yourself for being slow.", "Stubbornly pushing through brain fog.", "Taking on abstract or highly creative tasks today.", "Resisting the need to just stop and sleep."],
+                    "time": ["Pace yourself incredibly slowly, steady and consistent.", "Take a proper, full 60-minute lunch break away from screens.", "Stop working by 5 PM sharp, no exceptions."]
+                },
+                "Stressed": {
+                    "focus": ["Break your biggest problem down into a checklist and start at item 1.", "Ground yourself by doing a repetitive, manual task.", "Prioritize security: handle the most critical, urgent risk first.", "Remind yourself of past times you successfully fixed similar chaos."],
+                    "avoid": ["Catastrophizing about long-term financial or career ruins.", "Becoming completely rigid and refusing to collaborate.", "Bottling up the stress until it manifests physically.", "Obsessing over things that are totally out of your control."],
+                    "time": ["Take a 15-minute nature walk or get outside immediately.", "Schedule one worry-free hour tonight to completely disconnect.", "Work strictly minute-to-minute. Don't look at next week."]
+                },
+                "Lazy": {
+                    "focus": ["Just accomplish one highly practical, tangible thing.", "Automate a repetitive task so you never have to do it again.", "Sort out your budget or read something resourceful.", "Do the physical chores first: laundry, dishes, tidying."],
+                    "avoid": ["Feeling like your worth is entirely tied to your productivity.", "Stubbornly refusing to adapt your plans for a lighter day.", "Letting your physical environment fall into complete disarray.", "Using 'rest' as an excuse to ignore important deadlines."],
+                    "time": ["Set a timer for 20 minutes to clean, then re-evaluate.", "Batch all your easy tasks into one 45-minute block.", "Give yourself permission to effectively do nothing until tomorrow."]
+                }
+            },
+            "Air": {
+                "Focused": {
+                    "focus": ["Brainstorm and map out complex ideas while your mind is sharp.", "Handle all your important communications, emails, and meetings.", "Synthesize different pieces of information into a clear strategy.", "Collaborate with someone; your social intelligence is peaking."],
+                    "avoid": ["Getting distracted by three other shiny, interesting ideas.", "Talking about the work instead of actually doing the work.", "Leaving browser tabs open for 'later'—finish it now.", "Skipping the boring, necessary final steps of execution."],
+                    "time": ["Work in short, varied bursts to keep your mind stimulated.", "Schedule back-to-back meetings now, then block out quiet time.", "Switch environments every few hours to keep your focus sharp."]
+                },
+                "Tired": {
+                    "focus": ["Unplug entirely from screens and the constant flow of information.", "Listen to music or lay back, letting your thoughts wander.", "Do tasks that require zero decisions or complex choices.", "Have a casual, zero-stakes conversation with a friend."],
+                    "avoid": ["Mindlessly scrolling, which will overstimulate your tired brain.", "Trying to solve complex logic puzzles or coding issues.", "Making big social commitments for later this week.", "Over-caffeinating to force your brain to keep moving."],
+                    "time": ["Log off immediately if you can; your brain needs a reset.", "Limit your active work sprints to 15-minute intervals.", "Take a break right now to just stare at a wall and breathe."]
+                },
+                "Stressed": {
+                    "focus": ["Talk the problem out loud to someone you trust.", "Do a total brain-dump onto a whiteboard or physical paper.", "Simplify your options down to exactly two choices.", "Step into a completely different room to break the feedback loop."],
+                    "avoid": ["Overthinking and analyzing the situation from 50 different angles.", "Gossiping or dragging others into the chaotic energy.", "Ignoring your physical body because you're stuck in your head.", "Ghosting people because you feel overwhelmed."],
+                    "time": ["Take a full 30-minute break away from all digital devices.", "Give yourself a hard deadline today so you don't overthink.", "Spend the first 10 minutes of every hour just breathing."]
+                },
+                "Lazy": {
+                    "focus": ["Watch an educational video or listen to a podcast instead of typing.", "Tidy up your digital workspace (files, desktop, inbox).", "Spark your curiosity by reading something totally unrelated to work.", "Jot down your random ideas for when you feel more active."],
+                    "avoid": ["Endless group chats that drain time but give no real rest.", "Getting paralyzed by indecision over what TV show to watch.", "Flaking on people at the very last minute.", "Scattering your relaxed energy across too many passive things."],
+                    "time": ["Don't force it. Let your mind wander freely for the next hour.", "If you must work, do 10 minutes of reading, then 10 of writing.", "Dedicate this specific evening to purely intellectual relaxation."]
+                }
+            },
+            "Water": {
+                "Focused": {
+                    "focus": ["Trust your strong intuition to make the final executive call.", "Pour your vivid emotions into a creative or deeply personal project.", "Connect deeply with a client, partner, or team member.", "Solve the underlying 'human' or emotional problem in your work."],
+                    "avoid": ["Absorbing the negative moods of the people working around you.", "Losing track of time because you're so deep in the zone.", "Taking objective criticism too personally while you create.", "Over-committing because you want to help everyone right now."],
+                    "time": ["Ride the wave; keep working continuously while you feel it.", "Dedicate the quietest part of the day strictly to your craft.", "Protect your next 90 minutes from all external interruptions."]
+                },
+                "Tired": {
+                    "focus": ["Protect your emotional boundaries and say 'no' to everything extra.", "Retreat to a safe, comfortable space to decompress.", "Hydrate, take a warm shower, and reset your nervous system.", "Consume gentle, comforting media that requires no emotional labor."],
+                    "avoid": ["Dealing with highly critical or demanding people today.", "Taking on someone else's emotional baggage or drama.", "Making decisions based on feelings of insecurity.", "Feeling guilty for needing to withdraw and hide away."],
+                    "time": ["Cancel whatever non-essential plans you have for tonight.", "Take a nap. Your intuition is useless when you're exhausted.", "Ease into the bare minimum tasks for the next few hours."]
+                },
+                "Stressed": {
+                    "focus": ["Process your emotions through journaling, art, or music.", "Isolate yourself briefly to separate your feelings from others.", "Do one small, comforting ritual (tea, candles, cozy clothes).", "Communicate your limits softly but firmly right now."],
+                    "avoid": ["Drowning in a spiral of 'what-if' paranoid scenarios.", "Snapping at loved ones because you feel internally overwhelmed.", "Using escapism (food, drinks, unchecked media) to excess.", "Playing the victim or feeling like the world is entirely against you."],
+                    "time": ["Take the next hour entirely off. The work will survive.", "Do a 10-minute guided meditation specifically for anxiety.", "Sleep on it; do not send that emotionally charged message."]
+                },
+                "Lazy": {
+                    "focus": ["Embrace the daydreaming; your subconscious is trying to process.", "Organize your photo library or mood boards.", "Reach out to one friend just to say hello, no heavy talk.", "Do some very light, intuitive stretching or yoga."],
+                    "avoid": ["Wallowing in nostalgia or old regrets while doing nothing.", "Letting your physical space become completely chaotic.", "Ignoring basic self-care like eating properly or showering.", "Using 'the vibe is off' as an excuse for days on end."],
+                    "time": ["Let time flow organically today. Remove the rigid schedule.", "Tackle one tiny aesthetic or emotional task every hour.", "Surrender to the downtime and forgive yourself for it."]
+                }
+            }
+        };
+
+        const SIGN_FLAVOR = {
+            "Aries": "pioneer spirit", "Taurus": "steadfast anchor", "Gemini": "quick-witted mind",
+            "Cancer": "deep empathy", "Leo": "radiant leadership", "Virgo": "meticulous architecture",
+            "Libra": "harmonious diplomacy", "Scorpio": "intense investigation", "Sagittarius": "restless exploration",
+            "Capricorn": "disciplined building", "Aquarius": "visionary rebellion", "Pisces": "mystical dreaming"
+        };
+
+        // --- DOM ELEMENTS ---
+        const inputCard = document.getElementById('input-card');
+        const resultCard = document.getElementById('result-card');
+        const btnReveal = document.getElementById('btn-reveal');
+        const btnReset = document.getElementById('btn-reset');
+        const moodSelect = document.getElementById('mood-select');
+        const optionsPanel = moodSelect.querySelector('.options-panel');
+        const selectTrigger = moodSelect.querySelector('.select-trigger');
+        const moodLabel = document.getElementById('mood-label');
+        const dobInput = document.getElementById('dob');
+        const toast = document.getElementById('toast');
+
+        let selectedMood = "";
+
+        // --- CORE FUNCTIONS ---
+        function getZodiacInfo(day, month) {
+            for (let i = 0; i < ZODIAC_DATES.length; i++) {
+                const [[m1, d1], [m2, d2], sign, element] = ZODIAC_DATES[i];
+                if ((month === m1 && day >= d1) || (month === m2 && day <= d2)) {
+                    return { sign, element };
+                }
+            }
+            return { sign: 'Capricorn', element: 'Earth' };
+        }
+
+        function generateAdvice(sign, element, mood) {
+            const flavor = SIGN_FLAVOR[sign] || "unique energy";
+            const data = ADVICE_DB[element][mood];
+            
+            const randomPick = (arr) => arr[Math.floor(Math.random() * arr.length)];
+            
+            let focus = randomPick(data.focus);
+            focus = focus.charAt(0).toLowerCase() + focus.slice(1);
+
+            return {
+                focus: `Utilize your ${flavor} to ${focus}`,
+                avoid: randomPick(data.avoid),
+                time: randomPick(data.time)
+            };
+        }
+
+        function showToast(msg) {
+            toast.innerText = msg;
+            toast.style.display = 'block';
+            setTimeout(() => { toast.style.display = 'none'; }, 3000);
+        }
+
+        // --- EVENT HANDLERS ---
+        moodSelect.addEventListener('click', () => {
+            optionsPanel.classList.toggle('show');
+            selectTrigger.classList.toggle('active');
+        });
+
+        document.querySelectorAll('.option').forEach(opt => {
+            opt.addEventListener('click', (e) => {
+                e.stopPropagation();
+                selectedMood = opt.dataset.value;
+                moodLabel.innerText = selectedMood;
+                optionsPanel.classList.remove('show');
+                selectTrigger.classList.remove('active');
+            });
+        });
+
+        dobInput.addEventListener('input', (e) => {
+            let val = e.target.value.replace(/\D/g, '');
+            if (val.length >= 2) {
+                val = val.slice(0, 2) + ' / ' + val.slice(2, 4);
+            }
+            e.target.value = val;
+        });
+
+        btnReveal.addEventListener('click', () => {
+            const name = document.getElementById('user-name').value || "Seeker";
+            const dob = dobInput.value;
+
+            if (!dob || !selectedMood || dob.length < 7) {
+                showToast("The cosmic resonance is incomplete.");
+                return;
+            }
+
+            try {
+                const parts = dob.split(' / ');
+                const d = parseInt(parts[0]);
+                const m = parseInt(parts[1]);
+
+                if (isNaN(d) || isNaN(m) || m < 1 || m > 12 || d < 1 || d > 31) throw new Error();
+
+                const { sign, element } = getZodiacInfo(d, m);
+                const advice = generateAdvice(sign, element, selectedMood);
+
+                // Update UI
+                document.getElementById('res-name').innerText = name;
+                document.getElementById('res-zodiac').innerText = `${sign} | ${element}`;
+                document.getElementById('res-focus').innerText = advice.focus;
+                document.getElementById('res-avoid').innerText = advice.avoid;
+                document.getElementById('res-time').innerText = advice.time;
+
+                inputCard.classList.add('hidden');
+                setTimeout(() => {
+                    resultCard.classList.remove('hidden');
+                }, 400);
+
+            } catch (err) {
+                showToast("Invalid temporal coordinates.");
+            }
+        });
+
+        btnReset.addEventListener('click', () => {
+            resultCard.classList.add('hidden');
+            setTimeout(() => {
+                inputCard.classList.remove('hidden');
+            }, 400);
+        });
+
+        // Close dropdown when clicking outside
+        document.addEventListener('click', (e) => {
+            if (!moodSelect.contains(e.target)) {
+                optionsPanel.classList.remove('show');
+                selectTrigger.classList.remove('active');
+            }
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ScriptSeekersX | Unlimited Movies & TVs</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="netflix.css">
+</head>
+
+<body>
+    <nav id="navbar">
+        <div class="nav-left">
+            <div class="logo">ScriptSeekers<span>X</span></div>
+            <ul class="nav-links">
+                <li><a href="#" class="active">Home</a></li>
+                <li><a href="#">TV Shows</a></li>
+                <li><a href="#">Movies</a></li>
+                <li><a href="#">New & Popular</a></li>
+            </ul>
+        </div>
+        <div class="nav-right">
+            <button class="icon-btn">🔍</button>
+            <button class="icon-btn">🔔</button>
+            <div class="profile-avatar">AV</div>
+        </div>
+    </nav>
+
+    <header class="hero">
+        <div class="hero-overlay"></div>
+        <video autoplay muted loop id="hero-vid" class="hero-bg">
+            <source
+                src="https://assets.mixkit.co/videos/preview/mixkit-stars-in-the-night-sky-out-of-focus-34440-large.mp4"
+                type="video/mp4">
+        </video>
+        <div class="hero-content">
+            <span class="category-tag">ORIGINAL</span>
+            <h1>ECLIPSE</h1>
+            <p class="meta">2026 • 2 Seasons • Sci-Fi Thriller</p>
+            <p class="desc">A team of explorers discovers a parallel dimension hidden within a black hole. Now they must
+                find a way back before the event horizon closes forever.</p>
+            <div class="hero-btns">
+                <button class="btn-play">▶ Play</button>
+                <button class="btn-info">ⓘ More Info</button>
+            </div>
+        </div>
+    </header>
+
+    <main class="gallery">
+        <section class="row">
+            <h3>Trending Now</h3>
+            <div class="movie-slider">
+                <div class="movie-card"><img src="https://picsum.photos/seed/m1/400/600" alt="Movie"></div>
+                <div class="movie-card"><img src="https://picsum.photos/seed/m2/400/600" alt="Movie"></div>
+                <div class="movie-card"><img src="https://picsum.photos/seed/m3/400/600" alt="Movie"></div>
+                <div class="movie-card"><img src="https://picsum.photos/seed/m4/400/600" alt="Movie"></div>
+                <div class="movie-card"><img src="https://picsum.photos/seed/m5/400/600" alt="Movie"></div>
+                <div class="movie-card"><img src="https://picsum.photos/seed/m6/400/600" alt="Movie"></div>
+            </div>
+        </section>
+
+        <section class="row">
+            <h3>Popular on ScriptSeekersX</h3>
+            <div class="movie-slider">
+                <div class="movie-card"><img src="https://picsum.photos/seed/p1/400/600" alt="Movie"></div>
+                <div class="movie-card"><img src="https://picsum.photos/seed/p2/400/600" alt="Movie"></div>
+                <div class="movie-card"><img src="https://picsum.photos/seed/p3/400/600" alt="Movie"></div>
+                <div class="movie-card"><img src="https://picsum.photos/seed/p4/400/600" alt="Movie"></div>
+                <div class="movie-card"><img src="https://picsum.photos/seed/p5/400/600" alt="Movie"></div>
+                <div class="movie-card"><img src="https://picsum.photos/seed/p6/400/600" alt="Movie"></div>
+            </div>
+        </section>
+    </main>
+
+    <script>
+        window.onscroll = function () {
+            var nav = document.getElementById('navbar');
+            if (window.pageYOffset > 50) {
+                nav.classList.add('scrolled');
+            } else {
+                nav.classList.remove('scrolled');
+            }
+        };
+    </script>
+    <footer style="
+        padding: 40px;
+        text-align: center;
+        opacity: 0.5;
+        font-size: 14px;
+        border-top: 1px solid rgba(255,255,255,0.1);
+    ">
+        © 2025 Arpit Vishwakarma AKA ScriptSeekers
+    </footer>
+</body>
+
+</html>

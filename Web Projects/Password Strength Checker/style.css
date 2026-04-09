@@ -1,0 +1,225 @@
+:root {
+    --primary: #00f2ff;
+    --primary-dim: rgba(0, 242, 255, 0.2);
+    --bg-black: #050505;
+    --card-bg: rgba(20, 20, 20, 0.8);
+    --text-main: #e0e0e0;
+    --text-dim: #707070;
+    --success: #00ff88;
+    --warning: #ffcc00;
+    --error: #ff3366;
+    --border: rgba(255, 255, 255, 0.05);
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Space Grotesk', sans-serif;
+}
+
+body {
+    background: var(--bg-black);
+    color: var(--text-main);
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+}
+
+.cyber-bg {
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    background-image: linear-gradient(var(--border) 1px, transparent 1px),
+                      linear-gradient(90deg, var(--border) 1px, transparent 1px);
+    background-size: 50px 50px;
+    z-index: -1;
+    opacity: 0.3;
+}
+
+.glow-orb {
+    position: fixed;
+    width: 400px;
+    height: 400px;
+    background: radial-gradient(circle, var(--primary-dim) 0%, transparent 70%);
+    top: -100px;
+    right: -100px;
+    z-index: -1;
+}
+
+.container {
+    width: 100%;
+    max-width: 500px;
+    padding: 20px;
+    animation: fadeIn 0.8s ease;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; filter: blur(10px); }
+    to { opacity: 1; filter: blur(0); }
+}
+
+header {
+    text-align: center;
+    margin-bottom: 40px;
+}
+
+.shield-logo {
+    width: 60px;
+    height: 60px;
+    margin: 0 auto 20px;
+    color: var(--primary);
+    filter: drop-shadow(0 0 10px var(--primary));
+}
+
+header h1 {
+    font-size: 2.5rem;
+    font-weight: 700;
+    letter-spacing: -1px;
+}
+
+header h1 span { color: var(--primary); text-shadow: 0 0 20px var(--primary); }
+
+header p {
+    color: var(--text-dim);
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    letter-spacing: 4px;
+    margin-top: 5px;
+}
+
+.analyzer-box {
+    background: var(--card-bg);
+    backdrop-filter: blur(20px);
+    border: 1px solid var(--border);
+    border-radius: 24px;
+    padding: 30px;
+    box-shadow: 0 40px 100px rgba(0,0,0,0.5);
+}
+
+.input-wrapper {
+    position: relative;
+    margin-bottom: 30px;
+}
+
+input {
+    width: 100%;
+    background: rgba(255,255,255,0.03);
+    border: 1px solid var(--border);
+    padding: 18px 24px;
+    border-radius: 14px;
+    color: white;
+    font-size: 1.1rem;
+    letter-spacing: 2px;
+    transition: all 0.3s ease;
+}
+
+input:focus {
+    outline: none;
+    border-color: var(--primary);
+    box-shadow: 0 0 20px var(--primary-dim);
+}
+
+.icon-btn {
+    position: absolute;
+    right: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+    background: transparent;
+    border: none;
+    color: var(--text-dim);
+    cursor: pointer;
+    width: 30px;
+}
+
+.icon-btn:hover { color: var(--primary); }
+
+/* Meter */
+.meter-container {
+    margin-bottom: 30px;
+}
+
+.meter-bar {
+    width: 100%;
+    height: 6px;
+    background: rgba(255,255,255,0.05);
+    border-radius: 3px;
+    overflow: hidden;
+    margin-bottom: 12px;
+}
+
+.fill {
+    height: 100%;
+    width: 0%;
+    background: var(--error);
+    transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: 0 0 10px currentColor;
+}
+
+.meter-labels {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.8rem;
+    font-weight: 600;
+    text-transform: uppercase;
+}
+
+/* Criteria */
+.criteria-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 15px;
+    margin-bottom: 30px;
+}
+
+.criterion {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 0.85rem;
+    color: var(--text-dim);
+    transition: all 0.3s;
+}
+
+.check-dot {
+    width: 8px;
+    height: 8px;
+    background: var(--text-dim);
+    border-radius: 50%;
+    transition: all 0.3s;
+}
+
+.criterion.valid { color: white; }
+.criterion.valid .check-dot { background: var(--success); box-shadow: 0 0 8px var(--success); }
+
+/* Insights */
+.security-insights {
+    background: rgba(255,255,255,0.02);
+    padding: 20px;
+    border-radius: 16px;
+}
+
+.security-insights h3 {
+    font-size: 0.75rem;
+    color: var(--text-dim);
+    text-transform: uppercase;
+    margin-bottom: 15px;
+}
+
+#insight-list {
+    list-style: none;
+    font-size: 0.85rem;
+    color: var(--text-main);
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+footer {
+    text-align: center;
+    margin-top: 30px;
+}
+
+footer p { font-size: 0.7rem; color: var(--text-dim); letter-spacing: 1px; }

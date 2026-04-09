@@ -1,0 +1,1702 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bottle Hunt 2025 - Premium Edition</title>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --bg-start: #0f172a;
+            --bg-end: #1e293b;
+            --primary: #38bdf8;
+            --primary-glow: rgba(56, 189, 248, 0.4);
+            --secondary: #818cf8;
+            --accent: #f472b6;
+            --success: #10b981;
+            --error: #f43f5e;
+            --warning: #fbbf24;
+            --glass: rgba(255, 255, 255, 0.03);
+            --glass-border: rgba(255, 255, 255, 0.08);
+            --glass-thick: rgba(255, 255, 255, 0.07);
+            --text-main: #f8fafc;
+            --text-dim: #94a3b8;
+            --grid-size: 4;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            user-select: none;
+        }
+
+        body {
+            font-family: 'Outfit', sans-serif;
+            background: var(--bg-start);
+            color: var(--text-main);
+            min-height: 100vh;
+            overflow-x: hidden;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        /* Animated Mesh Background */
+        .bg-animate {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            z-index: -1;
+            background: 
+                radial-gradient(circle at 0% 0%, rgba(56, 189, 248, 0.15) 0%, transparent 50%),
+                radial-gradient(circle at 100% 100%, rgba(129, 140, 248, 0.15) 0%, transparent 50%),
+                radial-gradient(circle at 50% 50%, rgba(244, 114, 182, 0.05) 0%, transparent 50%);
+            animation: meshMove 20s infinite alternate ease-in-out;
+        }
+
+        @keyframes meshMove {
+            0% { transform: scale(1); }
+            100% { transform: scale(1.1) translate(2% 2%); }
+        }
+
+        .container {
+            width: 95%;
+            max-width: 1100px;
+            margin: auto;
+            position: relative;
+            z-index: 1;
+            padding: 20px;
+        }
+
+        .screen {
+            display: none;
+            animation: screenFadeIn 0.8s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+        }
+
+        .screen.active {
+            display: block;
+        }
+
+        @keyframes screenFadeIn {
+            from { opacity: 0; transform: translateY(20px) scale(0.98); }
+            to { opacity: 1; transform: translateY(0) scale(1); }
+        }
+
+        /* Glass Panel */
+        .glass-panel {
+            background: var(--glass);
+            backdrop-filter: blur(25px);
+            -webkit-backdrop-filter: blur(25px);
+            border: 1px solid var(--glass-border);
+            border-radius: 32px;
+            padding: 40px;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+        }
+
+        /* Typography & Titles */
+        .title-container {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .title {
+            font-size: 4rem;
+            font-weight: 800;
+            letter-spacing: -2px;
+            background: linear-gradient(135deg, #fff 30%, var(--primary) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 10px;
+            text-transform: uppercase;
+            filter: drop-shadow(0 0 20px var(--primary-glow));
+        }
+
+        .subtitle {
+            color: var(--text-dim);
+            font-size: 1.1rem;
+            font-weight: 400;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+        }
+
+        /* Currency Widget */
+        .currency-display {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 12px 24px;
+            background: var(--glass-thick);
+            border: 1px solid var(--glass-border);
+            border-radius: 99px;
+            font-weight: 700;
+            font-size: 1.2rem;
+            color: #fbbf24;
+            margin: 0 auto 30px;
+            width: fit-content;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+        }
+
+        /* Buttons */
+        .button-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 16px;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .game-button {
+            padding: 18px 32px;
+            border-radius: 16px;
+            border: 1px solid rgba(255,255,255,0.1);
+            font-size: 1rem;
+            font-weight: 700;
+            color: white;
+            cursor: pointer;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            background: var(--glass-thick);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .game-button:hover:not(:disabled) {
+            transform: translateY(-5px) scale(1.02);
+            background: rgba(255,255,255,0.1);
+            border-color: var(--primary);
+            box-shadow: 0 15px 30px -5px rgba(56, 189, 248, 0.3);
+        }
+
+        .game-button.success {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            border: none;
+            font-size: 1.2rem;
+            grid-column: 1 / -1;
+            padding: 24px;
+            box-shadow: 0 10px 40px -10px var(--primary-glow);
+        }
+
+        /* Grid */
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(var(--grid-size), 1fr);
+            gap: 12px;
+            max-width: 550px;
+            margin: 20px auto;
+            padding: 15px;
+            background: rgba(0,0,0,0.2);
+            border-radius: 24px;
+            border: 1px solid var(--glass-border);
+        }
+
+        .grid-cell {
+            aspect-ratio: 1;
+            background: var(--glass-thick);
+            border-radius: 12px;
+            border: 1px solid var(--glass-border);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            transition: all 0.4s ease;
+            cursor: pointer;
+            box-shadow: inset 0 0 15px rgba(255,255,255,0.02);
+        }
+
+        .grid-cell:hover:not(.disabled) {
+            background: rgba(255,255,255,0.1);
+            transform: scale(1.05);
+            border-color: var(--primary);
+            box-shadow: 0 0 20px var(--primary-glow);
+        }
+
+        .grid-cell.bottle {
+            background: rgba(16, 185, 129, 0.15);
+            border-color: var(--success);
+            animation: cellPop 0.5s ease;
+        }
+
+        .grid-cell.hit {
+            background: rgba(244, 63, 94, 0.2);
+            border-color: var(--error);
+            box-shadow: 0 0 15px var(--error);
+        }
+
+        .grid-cell.miss {
+            opacity: 0.4;
+            transform: scale(0.9);
+            background: rgba(255,255,255,0.02);
+        }
+
+        @keyframes cellPop {
+            0% { transform: scale(0.8); opacity: 0; }
+            100% { transform: scale(1); opacity: 1; }
+        }
+
+        /* Notifications (Toasts) */
+        .toast {
+            background: rgba(15, 23, 42, 0.9);
+            backdrop-filter: blur(15px);
+            border-left: 4px solid var(--primary);
+            border-radius: 12px;
+            padding: 16px 24px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.4);
+            font-weight: 600;
+        }
+
+        /* Streak Bar */
+        .streak-container {
+            background: var(--glass-thick);
+            padding: 20px;
+            border-radius: 20px;
+            border: 1px solid var(--glass-border);
+            margin: 30px auto;
+            max-width: 500px;
+        }
+
+        .streak-track {
+            height: 12px;
+            background: rgba(0,0,0,0.3);
+            border-radius: 99px;
+            margin: 10px 0;
+            overflow: hidden;
+            border: 1px solid var(--glass-border);
+        }
+
+        .streak-fill {
+            background: linear-gradient(90deg, var(--accent), var(--secondary));
+            box-shadow: 0 0 15px var(--secondary);
+        }
+
+        /* Power Ups */
+        .power-up-btn {
+            background: var(--glass-thick);
+            border: 1px solid var(--glass-border);
+            padding: 12px 20px;
+            border-radius: 12px;
+            font-weight: 700;
+            color: var(--text-main);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: 0.3s;
+        }
+
+        .power-up-btn:hover:not(:disabled) {
+            background: var(--primary);
+            color: #000;
+            transform: translateY(-3px);
+        }
+
+        /* Sound Control */
+        .sound-controls {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+        }
+
+        .sound-btn {
+            width: 50px; height: 50px;
+            background: var(--glass-thick);
+            border: 1px solid var(--glass-border);
+            border-radius: 50%;
+            cursor: pointer;
+            backdrop-filter: blur(10px);
+            color: white;
+            font-size: 1.2rem;
+            transition: 0.3s;
+        }
+
+        .sound-btn:hover {
+            transform: rotate(15deg) scale(1.1);
+            background: var(--primary);
+        }
+
+        /* Achievements & Shop */
+        .achievements-container, .bottle-designs-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 20px;
+            padding: 20px 0;
+        }
+
+        .achievement, .bottle-design {
+            background: var(--glass-thick);
+            border: 1px solid var(--glass-border);
+            border-radius: 24px;
+            padding: 25px;
+            transition: 0.4s;
+            text-align: center;
+        }
+
+        .achievement:hover, .bottle-design:hover {
+            border-color: var(--primary);
+            transform: translateY(-8px);
+            background: rgba(255,255,255,0.05);
+        }
+
+        .achievement.unlocked {
+            box-shadow: 0 0 20px rgba(16, 185, 129, 0.2);
+            border-color: var(--success);
+        }
+
+        /* Footer Stylized */
+        footer {
+            margin-top: 40px;
+            font-weight: 300;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            font-size: 0.8rem;
+            color: var(--text-dim);
+            text-align: center;
+            pointer-events: none;
+        }
+
+        /* Responsive Fixes */
+        /* Particle Effects */
+        .particles-container {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            pointer-events: none;
+            z-index: 1000;
+        }
+
+        .particle {
+            position: absolute;
+            border-radius: 50%;
+            pointer-events: none;
+        }
+
+        @media (max-width: 600px) {
+            .title { font-size: 2.5rem; }
+            .glass-panel { padding: 25px 15px; }
+            .button-container { grid-template-columns: 1fr; }
+        }
+    </style>
+
+</head>
+<body>
+    <div class="bg-animate"></div>
+    <div id="particles-container" class="particles-container"></div>
+    <div class="container">
+        <!-- Sound Controls -->
+        <div class="sound-controls">
+            <button id="sound-toggle" class="sound-btn" onclick="toggleSound()">
+                <i class="fas fa-volume-up"></i>
+            </button>
+        </div>
+
+        <!-- Toast Container -->
+        <div id="toast-container" class="toast-container"></div>
+
+        <!-- Menu Screen -->
+        <div id="menu-screen" class="screen active">
+            <div class="glass-panel text-center">
+                <div class="title-container">
+                    <h1 class="title">ScriptSeekers</h1>
+                    <p class="subtitle">Premium Bottle Hunt</p>
+                </div>
+
+                <div class="currency-display">
+                    <i class="fas fa-coins"></i>
+                    <span id="coins-amount">0</span>
+                </div>
+
+                <!-- Streak Bar -->
+                <div class="streak-container">
+                    <div class="streak-label">
+                        <span><i class="fas fa-fire"></i> Win Streak</span>
+                        <span id="current-streak">0</span>
+                    </div>
+                    <div class="streak-track">
+                        <div class="streak-fill" id="streak-fill" style="width: 0%"></div>
+                    </div>
+                    <div class="streak-label" style="margin-top: 10px; font-size: 0.8rem; opacity: 0.7;">
+                        <span>Next Reward Bonus:</span>
+                        <span id="next-reward">25 🪙</span>
+                    </div>
+                </div>
+
+                <div class="grid-size-selector" style="display: flex; justify-content: center; gap: 15px; margin-bottom: 30px;">
+                    <div class="grid-size-option active" data-size="4" onclick="setGridSize(4)">4x4</div>
+                    <div class="grid-size-option" data-size="6" onclick="setGridSize(6)">6x6</div>
+                    <div class="grid-size-option" data-size="8" onclick="setGridSize(8)">8x8</div>
+                </div>
+
+                <div class="button-container">
+                    <button class="game-button success" onclick="showGameModes()">
+                        <i class="fas fa-play"></i> Start Operation
+                    </button>
+                    <button class="game-button" onclick="showBottleShop()">
+                        <i class="fas fa-store"></i> Arsenal Shop
+                    </button>
+                    <button class="game-button" onclick="showAchievements()">
+                        <i class="fas fa-medal"></i> Achievements
+                    </button>
+                    <button class="game-button" onclick="showLeaderboard()">
+                        <i class="fas fa-list-ol"></i> Leaderboard
+                    </button>
+                </div>
+
+                <footer>© 2025 Arpit Vishwakarma AKA ScriptSeekers</footer>
+            </div>
+        </div>
+
+        <!-- Game Modes Screen -->
+        <div id="game-modes-screen" class="screen">
+            <div class="glass-panel text-center">
+                <h2 class="title" style="font-size: 2.5rem;">Select Difficulty</h2>
+                <div class="button-container" style="margin-top: 40px;">
+                    <button class="game-button" onclick="startGame('easy')" style="border-color: var(--success);">
+                        <i class="fas fa-leaf"></i> Rookie
+                    </button>
+                    <button class="game-button" onclick="startGame('medium')" style="border-color: var(--warning);">
+                        <i class="fas fa-shield-alt"></i> Veteran
+                    </button>
+                    <button class="game-button" onclick="startGame('hard')" style="border-color: var(--error);">
+                        <i class="fas fa-skull"></i> Elite
+                    </button>
+                </div>
+                <button class="game-button" onclick="showScreen('menu-screen')" style="margin-top: 30px; width: auto; align-self: center;">
+                    <i class="fas fa-arrow-left"></i> Abort
+                </button>
+            </div>
+        </div>
+
+        <!-- Bottle Shop Screen -->
+        <div id="bottle-shop-screen" class="screen">
+            <div class="glass-panel">
+                <div class="title-container">
+                    <h2 class="title" style="font-size: 2.5rem;">Arsenal Shop</h2>
+                    <div class="currency-display">
+                        <i class="fas fa-coins"></i>
+                        <span id="shop-coins-amount">0</span>
+                    </div>
+                </div>
+                
+                <div class="bottle-designs-container" id="bottle-designs-container"></div>
+                
+                <div style="display: flex; justify-content: center; margin-top: 30px;">
+                    <button class="game-button" onclick="showScreen('menu-screen')">
+                        <i class="fas fa-check"></i> Done
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Achievements Screen -->
+        <div id="achievements-screen" class="screen">
+            <div class="glass-panel">
+                <h2 class="title text-center" style="font-size: 2.5rem;">Your Honours</h2>
+                <div class="achievements-container" id="achievements-container"></div>
+                <div style="display: flex; justify-content: center; margin-top: 30px;">
+                    <button class="game-button" onclick="showScreen('menu-screen')">
+                        <i class="fas fa-arrow-left"></i> Return
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Leaderboard Screen -->
+        <div id="leaderboard-screen" class="screen">
+            <div class="glass-panel">
+                <h2 class="title text-center" style="font-size: 2.5rem;">Hall of Fame</h2>
+                <div class="leaderboard-container" id="leaderboard-container"></div>
+                <div style="display: flex; justify-content: center; margin-top: 30px;">
+                    <button class="game-button" onclick="showScreen('menu-screen')">
+                        <i class="fas fa-arrow-left"></i> Return
+                    </button>
+                </div>
+            </div>
+        </div>
+
+                <button class="game-button primary" onclick="returnToMenu()">Back to Menu</button>
+            </div>
+        </div>
+
+        <!-- Placement Screen -->
+        <div id="placing-screen" class="screen">
+            <div class="glass-panel text-center">
+                <h2 class="title" style="font-size: 2.5rem;">Strategic Positioning</h2>
+                <p style="color: var(--text-dim); margin-bottom: 20px;">Deploy your fleet on the grid. <br>Requires <span id="total-bottles" style="color: var(--primary); font-weight: 700;">6</span> units.</p>
+                <div class="currency-display" style="font-size: 1rem; padding: 8px 16px;">
+                    <i class="fas fa-crosshairs"></i>
+                    <span id="bottles-placed">0</span> / <span id="total-bottles-2">6</span>
+                </div>
+                
+                <div class="grid" id="placement-grid"></div>
+                
+                <div class="button-container" style="margin-top: 30px;">
+                    <button class="game-button success" id="start-game-btn" onclick="startPlaying()" disabled>
+                        <i class="fas fa-bolt"></i> Engage
+                    </button>
+                    <button class="game-button" onclick="returnToMenu()">
+                        <i class="fas fa-home"></i> Retreat
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Playing Screen -->
+        <div id="playing-screen" class="screen">
+            <div class="glass-panel text-center">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+                    <h2 class="title" style="font-size: 1.8rem; margin: 0;">Operation <span id="difficulty-display">Alpha</span></h2>
+                    <!-- Timer for Time Attack Mode -->
+                    <div class="currency-display" id="timer-display" style="display: none; margin: 0; background: var(--error);">
+                        <i class="fas fa-hourglass-half"></i>
+                        <span id="time-left">60</span>s
+                    </div>
+                </div>
+
+                <div class="turn-indicator" id="turn-indicator">
+                    <i class="fas fa-bullseye"></i> Your Turn
+                </div>
+
+                <div class="game-info">
+                    <div class="player-info" style="flex: 1; margin-right: 10px;">
+                        <span style="font-size: 0.8rem; color: var(--text-dim);">COMMANDER</span>
+                        <h3 style="color: var(--primary);">Arpit (AV)</h3>
+                        <div style="font-weight: 700;">Hits: <span id="player-score">0</span>/<span id="player-total">6</span></div>
+                        <div class="progress-bar">
+                            <div class="progress-fill" id="player-progress" style="width: 0%"></div>
+                        </div>
+                    </div>
+                    <div class="player-info" style="flex: 1; margin-left: 10px;">
+                        <span style="font-size: 0.8rem; color: var(--text-dim);">OPPOSITION</span>
+                        <h3 style="color: var(--error);">Deepmind AI</h3>
+                        <div style="font-weight: 700;">Hits: <span id="ai-score">0</span>/<span id="ai-total">6</span></div>
+                        <div class="progress-bar" style="background: rgba(244, 63, 94, 0.1);">
+                            <div class="progress-fill" id="ai-progress" style="width: 0%; background: var(--error);"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="power-ups">
+                    <button class="power-up-btn" id="sonar-btn" onclick="usePowerUp('sonar')">
+                        <i class="fas fa-satellite-dish"></i> Sonar (3)
+                    </button>
+                    <button class="power-up-btn" id="doubleShot-btn" onclick="usePowerUp('doubleShot')">
+                        <i class="fas fa-fighter-jet"></i> Strike (2)
+                    </button>
+                    <button class="power-up-btn" id="shield-btn" onclick="usePowerUp('shield')">
+                        <i class="fas fa-shield-virus"></i> Shield (1)
+                    </button>
+                </div>
+
+                <div style="margin: 30px 0;">
+                    <p style="color: var(--text-dim); text-transform: uppercase; font-size: 0.8rem; letter-spacing: 2px;">Opposition Grid</p>
+                    <div class="grid" id="ai-grid"></div>
+                </div>
+
+                <button class="game-button" onclick="returnToMenu()" style="width: auto; align-self: center;">
+                    <i class="fas fa-sign-out-alt"></i> Abandon Mission
+                </button>
+            </div>
+        </div>
+
+        <!-- Game Over Screen -->
+        <div id="gameover-screen" class="screen">
+            <div class="glass-panel text-center">
+                <h1 class="gameover-title" id="winner-text" style="font-weight: 800; letter-spacing: -2px;">MISSION DEBRIEF</h1>
+                <p class="subtitle" id="winner-message" style="margin-bottom: 40px;">Operation Concluded</p>
+                
+                <div class="final-scores">
+                    <div class="final-score" style="border-color: var(--primary);">
+                        <p style="font-size: 0.8rem; color: var(--text-dim);">COMMANDER</p>
+                        <h3 id="final-player-score" style="font-size: 2rem;">0/6</h3>
+                    </div>
+                    <div class="final-score" style="border-color: var(--error);">
+                        <p style="font-size: 0.8rem; color: var(--text-dim);">AI</p>
+                        <h3 id="final-ai-score" style="font-size: 2rem;">0/6</h3>
+                    </div>
+                </div>
+
+                <div class="currency-display" style="background: var(--success); color: #000; margin-bottom: 40px;">
+                    <i class="fas fa-chart-line"></i>
+                    <span id="xp-earned">+50 XP EARNED</span>
+                </div>
+
+                <div class="button-container">
+                    <button class="game-button success" onclick="startGame(difficulty)">
+                        <i class="fas fa-redo"></i> Redeploy
+                    </button>
+                    <button class="game-button" onclick="returnToMenu()">
+                        <i class="fas fa-home"></i> Base Menu
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Streak Reward Popup -->
+        <div id="streak-reward-popup" class="streak-reward-popup" style="display: none; border-radius: 32px; border-color: var(--primary);">
+            <i class="fas fa-fire" style="font-size: 3rem; color: var(--accent); margin-bottom: 20px;"></i>
+            <h3 class="title" style="font-size: 2rem;">STREAK BONUS!</h3>
+            <p class="subtitle">Elite Performance Bonus</p>
+            <div class="streak-reward-amount" id="reward-amount" style="font-size: 3rem;">+25 🪙</div>
+            <button class="game-button success" onclick="closeRewardPopup()" style="width: 100%;">
+                CLAIM REWARD
+            </button>
+        </div>
+    </div>
+
+    <footer style="
+    position:fixed;
+    bottom:10px;
+    left:0;
+    width:100%;
+    text-align:center;
+    font-size:14px;
+    opacity:0.7;
+    pointer-events:none;
+">
+    © 2025 Arpit Vishwakarma AKA ScriptSeekers
+</footer>
+
+
+    <script>
+        // Game State
+        let gameState = 'menu';
+        let difficulty = 'easy';
+        let gameMode = 'classic';
+        let gridSize = 4;
+        let playerBottles = [];
+        let aiBottles = [];
+        let playerGuesses = new Set();
+        let aiGuesses = new Set();
+        let playerScore = 0;
+        let aiScore = 0;
+        let turn = 'player';
+        let winner = null;
+        let gameTimer = null;
+        let timeLeft = 60;
+        let soundEnabled = true;
+        
+        // Premium Features
+        let playerLevel = 1;
+        let playerXP = 0;
+        let nextLevelXP = 100;
+        let currentTheme = 'aqua';
+        let playerCoins = 0;
+        let currentStreak = 0;
+        let currentBottleDesign = '🍾';
+        let unlockedBottleDesigns = ['🍾'];
+
+        // Expanded Bottle designs (25 total)
+        const bottleDesigns = [
+            { id: 'default', icon: '🍾', name: 'Classic Bottle', price: 0, unlocked: true },
+            { id: 'premium', icon: '🍷', name: 'Wine Bottle', price: 50, unlocked: false },
+            { id: 'treasure', icon: '🏺', name: 'Ancient Vase', price: 100, unlocked: false },
+            { id: 'magic', icon: '🧪', name: 'Magic Potion', price: 150, unlocked: false },
+            { id: 'crystal', icon: '🔮', name: 'Crystal Ball', price: 200, unlocked: false },
+            { id: 'soda', icon: '🥤', name: 'Soda Can', price: 75, unlocked: false },
+            { id: 'milk', icon: '🥛', name: 'Milk Bottle', price: 60, unlocked: false },
+            { id: 'perfume', icon: '💎', name: 'Perfume Bottle', price: 180, unlocked: false },
+            { id: 'oil', icon: '🛢️', name: 'Oil Lamp', price: 120, unlocked: false },
+            { id: 'ink', icon: '🖋️', name: 'Ink Bottle', price: 90, unlocked: false },
+            { id: 'potion2', icon: '🧴', name: 'Healing Potion', price: 160, unlocked: false },
+            { id: 'genie', icon: '🧞', name: 'Genie Lamp', price: 250, unlocked: false },
+            { id: 'beer', icon: '🍺', name: 'Beer Mug', price: 80, unlocked: false },
+            { id: 'whiskey', icon: '🥃', name: 'Whiskey Glass', price: 110, unlocked: false },
+            { id: 'champagne', icon: '🍾', name: 'Champagne', price: 130, unlocked: false },
+            { id: 'coconut', icon: '🥥', name: 'Coconut Drink', price: 70, unlocked: false },
+            { id: 'coffee', icon: '☕', name: 'Coffee Cup', price: 65, unlocked: false },
+            { id: 'tea', icon: '🫖', name: 'Teapot', price: 95, unlocked: false },
+            { id: 'honey', icon: '🍯', name: 'Honey Jar', price: 85, unlocked: false },
+            { id: 'syringe', icon: '💉', name: 'Syringe', price: 140, unlocked: false },
+            { id: 'flask', icon: '🧫', name: 'Science Flask', price: 170, unlocked: false },
+            { id: 'trophy', icon: '🏆', name: 'Trophy Cup', price: 220, unlocked: false },
+            { id: 'hourglass', icon: '⏳', name: 'Hourglass', price: 190, unlocked: false },
+            { id: 'diamond', icon: '💎', name: 'Diamond Vial', price: 300, unlocked: false },
+            { id: 'galaxy', icon: '🌌', name: 'Galaxy Flask', price: 350, unlocked: false }
+        ];
+
+        // Streak milestones
+        const streakMilestones = [
+            { streak: 3, reward: 25 },
+            { streak: 5, reward: 50 },
+            { streak: 10, reward: 100 }
+        ];
+
+        // Power-ups
+        let powerUps = {
+            sonar: { uses: 3, active: false },
+            doubleShot: { uses: 2, active: false },
+            shield: { uses: 1, active: false },
+            reveal: { uses: 1, active: false }
+        };
+
+        // Achievements
+        const achievements = [
+            { id: 'first_win', name: 'First Victory', description: 'Win your first game', icon: '🏆', unlocked: false, progress: 0, target: 1 },
+            { id: 'streak_3', name: 'Hot Streak', description: 'Achieve a 3-game win streak', icon: '🔥', unlocked: false, progress: 0, target: 3 },
+            { id: 'bottle_collector', name: 'Bottle Collector', description: 'Purchase 5 bottle designs', icon: '🍾', unlocked: false, progress: 0, target: 5 },
+            { id: 'grid_master', name: 'Grid Master', description: 'Win games on all grid sizes', icon: '🎯', unlocked: false, progress: 0, target: 3 },
+            { id: 'bottle_master', name: 'Bottle Master', description: 'Collect 15 different bottle designs', icon: '🧴', unlocked: false, progress: 0, target: 15 }
+        ];
+
+        // Daily Rewards
+        const dailyRewards = [10, 15, 20, 25, 30, 40, 50];
+        let lastRewardDate = null;
+        let currentRewardDay = 0;
+
+        // Leaderboard
+        let leaderboard = [
+            { name: 'Arpit (AV)', score: 0, isCurrentPlayer: true },
+            { name: 'BottleMaster', score: 120 },
+            { name: 'SeaHunter', score: 95 },
+            { name: 'WaveRider', score: 80 },
+            { name: 'AnchorDropper', score: 65 }
+        ];
+
+        // Missions
+        let activeMissions = [
+            { id: 'hit_5', name: 'Precision Striker', description: 'Hit 5 bottles in a single game', reward: 15, progress: 0, target: 5, completed: false },
+            { id: 'win_3', name: 'Consistent Winner', description: 'Win 3 games', reward: 25, progress: 0, target: 3, completed: false },
+            { id: 'streak_2', name: 'Momentum Builder', description: 'Achieve a 2-game win streak', reward: 20, progress: 0, target: 2, completed: false }
+        ];
+
+        // Screen Management
+        function showScreen(screenId) {
+            document.querySelectorAll('.screen').forEach(screen => {
+                screen.classList.remove('active');
+            });
+            document.getElementById(screenId).classList.add('active');
+            gameState = screenId.replace('-screen', '');
+        }
+
+        // Toast System
+        function showToast(message, type = 'info') {
+            const container = document.getElementById('toast-container');
+            const toast = document.createElement('div');
+            toast.className = `toast ${type}`;
+            toast.textContent = message;
+            container.appendChild(toast);
+            
+            setTimeout(() => {
+                toast.style.animation = 'slideIn 0.3s ease reverse';
+                setTimeout(() => toast.remove(), 300);
+            }, 3000);
+        }
+
+        // Theme System
+        function setTheme(theme) {
+            currentTheme = theme;
+            document.documentElement.className = theme;
+            document.querySelectorAll('.theme-option').forEach(option => {
+                option.classList.remove('active');
+            });
+            document.querySelector(`.theme-option[data-theme="${theme}"]`).classList.add('active');
+        }
+
+        // Grid Size
+        function setGridSize(size) {
+            gridSize = parseInt(size);
+            document.documentElement.style.setProperty('--grid-size', gridSize);
+            document.querySelectorAll('.grid-size-option').forEach(option => {
+                option.classList.remove('active');
+            });
+            document.querySelector(`.grid-size-option[data-size="${size}"]`).classList.add('active');
+            updateBottleCounts();
+        }
+
+        function updateBottleCounts() {
+            const totalBottles = gridSize; 
+            document.getElementById('total-bottles').textContent = totalBottles;
+            document.getElementById('total-bottles-2').textContent = totalBottles;
+            document.getElementById('player-total').textContent = totalBottles;
+            document.getElementById('ai-total').textContent = totalBottles;
+        }
+
+        // Game Modes
+        function showGameModes() {
+            showScreen('game-modes-screen');
+        }
+
+        function selectGameMode(mode) {
+            gameMode = mode;
+            document.querySelectorAll('.game-mode').forEach(option => {
+                option.classList.remove('active');
+            });
+            document.querySelector(`.game-mode[data-mode="${mode}"]`).classList.add('active');
+        }
+
+        // Start Game
+        function startGame(diff) {
+            difficulty = diff;
+            playerBottles = [];
+            aiBottles = placeAiBottles();
+            playerGuesses = new Set();
+            aiGuesses = new Set();
+            playerScore = 0;
+            aiScore = 0;
+            turn = 'player';
+            winner = null;
+            
+            // Reset power-ups
+            powerUps = {
+                sonar: { uses: 3, active: false },
+                doubleShot: { uses: 2, active: false },
+                shield: { uses: 1, active: false },
+                reveal: { uses: 1, active: false }
+            };
+            
+            // Reset missions progress
+            activeMissions.forEach(mission => {
+                mission.progress = 0;
+                mission.completed = false;
+            });
+            
+            // Setup game mode specific settings
+            if (gameMode === 'time') {
+                timeLeft = 60;
+                document.getElementById('timer-display').style.display = 'block';
+                document.getElementById('time-left').textContent = timeLeft;
+                startTimer();
+            } else {
+                document.getElementById('timer-display').style.display = 'none';
+                if (gameTimer) clearInterval(gameTimer);
+            }
+            
+            if (gameMode === 'hardcore') {
+                document.getElementById('active-missions-container').style.display = 'block';
+                renderActiveMissions();
+            } else {
+                document.getElementById('active-missions-container').style.display = 'none';
+            }
+            
+            showScreen('placing-screen');
+            renderPlacementGrid();
+            updateBottleCount();
+            updatePowerUpButtons();
+        }
+
+        function placeAiBottles() {
+            const totalBottles = gridSize; 
+            const positions = [];
+            
+            while (positions.length < totalBottles) {
+                const pos = [
+                    Math.floor(Math.random() * gridSize),
+                    Math.floor(Math.random() * gridSize)
+                ];
+                const key = `${pos[0]},${pos[1]}`;
+                if (!positions.some(p => `${p[0]},${p[1]}` === key)) {
+                    positions.push(pos);
+                }
+            }
+            return positions;
+        }
+
+        // Timer for Time Attack Mode
+        function startTimer() {
+            if (gameTimer) clearInterval(gameTimer);
+            
+            gameTimer = setInterval(() => {
+                timeLeft--;
+                document.getElementById('time-left').textContent = timeLeft;
+                
+                if (timeLeft <= 0) {
+                    clearInterval(gameTimer);
+                    if (playerScore < aiScore) {
+                        winner = 'ai';
+                        handleGameLoss();
+                    } else if (playerScore > aiScore) {
+                        winner = 'player';
+                        handleGameWin();
+                    } else {
+                        winner = 'tie';
+                    }
+                    showGameOver();
+                }
+            }, 1000);
+        }
+
+        // Placement Grid
+        function renderPlacementGrid() {
+            const grid = document.getElementById('placement-grid');
+            grid.innerHTML = '';
+            
+            for (let row = 0; row < gridSize; row++) {
+                for (let col = 0; col < gridSize; col++) {
+                    const cell = document.createElement('div');
+                    cell.className = 'grid-cell';
+                    cell.dataset.row = row;
+                    cell.dataset.col = col;
+                    
+                    const hasBottle = playerBottles.some(([r, c]) => r === row && c === col);
+                    if (hasBottle) {
+                        cell.classList.add('bottle');
+                        cell.textContent = currentBottleDesign;
+                    }
+                    
+                    cell.addEventListener('click', () => handlePlacementClick(row, col));
+                    grid.appendChild(cell);
+                }
+            }
+        }
+
+        function handlePlacementClick(row, col) {
+            const totalBottles = gridSize; 
+            const bottleIndex = playerBottles.findIndex(([r, c]) => r === row && c === col);
+            
+            if (bottleIndex >= 0) {
+                playerBottles.splice(bottleIndex, 1);
+                showToast('Bottle removed', 'info');
+            } else if (playerBottles.length < totalBottles) {
+                playerBottles.push([row, col]);
+                showToast('Bottle placed!', 'success');
+            }
+            
+            renderPlacementGrid();
+            updateBottleCount();
+        }
+
+        function updateBottleCount() {
+            const totalBottles = gridSize; 
+            document.getElementById('bottles-placed').textContent = playerBottles.length;
+            document.getElementById('start-game-btn').disabled = playerBottles.length !== totalBottles;
+        }
+
+        // Start Playing
+        function startPlaying() {
+            showScreen('playing-screen');
+            document.getElementById('difficulty-display').textContent = difficulty.charAt(0).toUpperCase() + difficulty.slice(1);
+            renderPlayingGrids();
+            updateScores();
+            updatePowerUpButtons();
+            updateTurnIndicator();
+            showToast('Game started! Your turn!', 'success');
+        }
+
+        // Render Game Grids
+        function renderPlayingGrids() {
+            renderPlayerGrid();
+            renderAiGrid();
+        }
+
+        function renderPlayerGrid() {
+            // This would render the player's own grid showing hits/misses
+        }
+
+        function renderAiGrid() {
+            const grid = document.getElementById('ai-grid');
+            grid.innerHTML = '';
+            
+            for (let row = 0; row < gridSize; row++) {
+                for (let col = 0; col < gridSize; col++) {
+                    const cell = document.createElement('div');
+                    cell.className = 'grid-cell';
+                    cell.dataset.row = row;
+                    cell.dataset.col = col;
+                    
+                    const key = `${row},${col}`;
+                    const isGuessed = playerGuesses.has(key);
+                    
+                    if (isGuessed) {
+                        const isHit = aiBottles.some(([r, c]) => r === row && c === col);
+                        if (isHit) {
+                            cell.classList.add('hit');
+                            cell.textContent = '💥';
+                            createParticles(cell, 10, '#22c55e');
+                        } else {
+                            cell.classList.add('miss');
+                        }
+                        cell.classList.add('disabled');
+                    } else if (turn !== 'player' || winner) {
+                        cell.classList.add('disabled');
+                    } else {
+                        cell.addEventListener('click', () => handlePlayerGuess(row, col));
+                    }
+                    
+                    grid.appendChild(cell);
+                }
+            }
+        }
+
+        // Game Logic
+        function handlePlayerGuess(row, col) {
+            if (turn !== 'player' || winner) return;
+            
+            const key = `${row},${col}`;
+            if (playerGuesses.has(key)) return;
+            
+            playerGuesses.add(key);
+            
+            const isHit = aiBottles.some(([r, c]) => r === row && c === col);
+            
+            if (isHit) {
+                playerScore++;
+                showToast('Hit! You found a bottle! 🎯', 'success');
+                createParticles(document.querySelector(`[data-row="${row}"][data-col="${col}"]`), 15, '#22c55e');
+                
+                // Update missions
+                updateMissionProgress('hit_5', 1);
+                
+                const totalBottles = gridSize; 
+                if (playerScore === totalBottles) {
+                    winner = 'player';
+                    handleGameWin();
+                    showGameOver();
+                    return;
+                }
+            } else {
+                showToast('Miss!', 'error');
+                
+                // Hardcore mode: one miss and you lose
+                if (gameMode === 'hardcore') {
+                    winner = 'ai';
+                    handleGameLoss();
+                    showGameOver();
+                    return;
+                }
+            }
+            
+            turn = 'ai';
+            updateTurnIndicator();
+            renderPlayingGrids();
+            updateScores();
+            updatePowerUpButtons();
+            
+            setTimeout(aiTurn, 1000);
+        }
+
+        function aiTurn() {
+            if (turn !== 'ai' || winner) return;
+            
+            let guess;
+            
+            // AI difficulty logic
+            if (difficulty === 'easy') {
+                // Random selection
+                const available = [];
+                for (let r = 0; r < gridSize; r++) {
+                    for (let c = 0; c < gridSize; c++) {
+                        if (!aiGuesses.has(`${r},${c}`)) {
+                            available.push([r, c]);
+                        }
+                    }
+                }
+                guess = available[Math.floor(Math.random() * available.length)];
+            } else if (difficulty === 'medium') {
+                // Pattern-based selection
+                guess = getMediumAIGuess();
+            } else { // hard
+                // Probability heatmap targeting
+                guess = getHardAIGuess();
+            }
+            
+            const [r, c] = guess;
+            const key = `${r},${c}`;
+            aiGuesses.add(key);
+            
+            const isHit = playerBottles.some(([br, bc]) => br === r && bc === c);
+            
+            if (isHit) {
+                aiScore++;
+                showToast('AI hit your bottle! 💥', 'error');
+                
+                const totalBottles = gridSize; 
+                if (aiScore === totalBottles) {
+                    winner = 'ai';
+                    handleGameLoss();
+                    showGameOver();
+                    return;
+                }
+            } else {
+                showToast('AI missed!', 'info');
+            }
+            
+            turn = 'player';
+            updateTurnIndicator();
+            renderPlayingGrids();
+            updateScores();
+            updatePowerUpButtons();
+        }
+
+        // AI Difficulty Implementations
+        function getMediumAIGuess() {
+            // Look for patterns in player bottle placement
+            const available = [];
+            for (let r = 0; r < gridSize; r++) {
+                for (let c = 0; c < gridSize; c++) {
+                    if (!aiGuesses.has(`${r},${c}`)) {
+                        available.push([r, c]);
+                    }
+                }
+            }
+            
+            // If we have hits, try adjacent cells
+            const hits = [];
+            aiGuesses.forEach(guess => {
+                const [r, c] = guess.split(',').map(Number);
+                if (playerBottles.some(([br, bc]) => br === r && bc === c)) {
+                    hits.push([r, c]);
+                }
+            });
+            
+            if (hits.length > 0) {
+                // Try adjacent cells to hits
+                const lastHit = hits[hits.length - 1];
+                const adjacent = [
+                    [lastHit[0]-1, lastHit[1]], [lastHit[0]+1, lastHit[1]],
+                    [lastHit[0], lastHit[1]-1], [lastHit[0], lastHit[1]+1]
+                ];
+                
+                const validAdjacent = adjacent.filter(([r, c]) => 
+                    r >= 0 && r < gridSize && c >= 0 && c < gridSize && !aiGuesses.has(`${r},${c}`)
+                );
+                
+                if (validAdjacent.length > 0) {
+                    return validAdjacent[Math.floor(Math.random() * validAdjacent.length)];
+                }
+            }
+            
+            // Fallback to random
+            return available[Math.floor(Math.random() * available.length)];
+        }
+
+        function getHardAIGuess() {
+            // Create a probability heatmap
+            const heatmap = Array(gridSize).fill().map(() => Array(gridSize).fill(0));
+            
+            // Increase probability around hits
+            aiGuesses.forEach(guess => {
+                const [r, c] = guess.split(',').map(Number);
+                if (playerBottles.some(([br, bc]) => br === r && bc === c)) {
+                    // This is a hit, increase probability of adjacent cells
+                    const adjacent = [
+                        [r-1, c], [r+1, c], [r, c-1], [r, c+1]
+                    ];
+                    
+                    adjacent.forEach(([ar, ac]) => {
+                        if (ar >= 0 && ar < gridSize && ac >= 0 && ac < gridSize) {
+                            heatmap[ar][ac] += 10;
+                        }
+                    });
+                }
+            });
+            
+            // Find the cell with highest probability that hasn't been guessed
+            let maxProb = -1;
+            let bestGuess = null;
+            
+            for (let r = 0; r < gridSize; r++) {
+                for (let c = 0; c < gridSize; c++) {
+                    if (!aiGuesses.has(`${r},${c}`) && heatmap[r][c] > maxProb) {
+                        maxProb = heatmap[r][c];
+                        bestGuess = [r, c];
+                    }
+                }
+            }
+            
+            // If no high probability cells found, use medium AI logic
+            return bestGuess || getMediumAIGuess();
+        }
+
+        // Streak & Coin System
+        function handleGameWin() {
+            currentStreak++;
+            const milestone = streakMilestones.find(m => currentStreak === m.streak);
+            if (milestone) {
+                awardCoins(milestone.reward);
+                showStreakReward(milestone.reward);
+            }
+            awardCoins(calculateCoinReward());
+            
+            // Update achievements
+            updateAchievementProgress('first_win', 1);
+            updateAchievementProgress('streak_3', 1);
+            if (gameMode === 'time') updateAchievementProgress('time_attack', 1);
+            if (gameMode === 'hardcore') updateAchievementProgress('hardcore', 1);
+            
+            // Update missions
+            updateMissionProgress('win_3', 1);
+            updateMissionProgress('streak_2', 1);
+            
+            updateStreakDisplay();
+            savePlayerProgress();
+        }
+
+        function handleGameLoss() {
+            currentStreak = 0;
+            updateStreakDisplay();
+            savePlayerProgress();
+        }
+
+        function calculateCoinReward() {
+            let coins = 10;
+            if (difficulty === 'medium') coins += 10;
+            if (difficulty === 'hard') coins += 20;
+            if (gridSize === 6) coins += 5;
+            if (gridSize === 8) coins += 10;
+            if (currentStreak > 0) {
+                coins += Math.floor(coins * (currentStreak * 0.1));
+            }
+            return coins;
+        }
+
+        function awardCoins(amount) {
+            playerCoins += amount;
+            updateCoinsDisplay();
+            showToast(`+${amount} Coins! 🪙`, 'success');
+        }
+
+        function updateCoinsDisplay() {
+            document.getElementById('coins-amount').textContent = playerCoins;
+            document.getElementById('shop-coins-amount').textContent = playerCoins;
+        }
+
+        function updateStreakDisplay() {
+            document.getElementById('current-streak').textContent = currentStreak;
+            const nextMilestone = streakMilestones.find(milestone => currentStreak < milestone.streak);
+            if (nextMilestone) {
+                const progress = (currentStreak / nextMilestone.streak) * 100;
+                document.getElementById('streak-fill').style.width = `${Math.min(progress, 100)}%`;
+                document.getElementById('next-reward').textContent = `${nextMilestone.reward} 🪙`;
+            } else {
+                document.getElementById('streak-fill').style.width = '100%';
+                document.getElementById('next-reward').textContent = 'Max Level!';
+            }
+        }
+
+        // Bottle Shop
+        function showBottleShop() {
+            showScreen('bottle-shop-screen');
+            renderBottleDesigns();
+        }
+
+        function renderBottleDesigns() {
+            const container = document.getElementById('bottle-designs-container');
+            container.innerHTML = '';
+
+            bottleDesigns.forEach(design => {
+                const designElement = document.createElement('div');
+                designElement.className = `bottle-design ${design.unlocked ? (currentBottleDesign === design.icon ? 'equipped' : '') : 'locked'}`;
+                
+                designElement.innerHTML = `
+                    <div class="bottle-design-icon">${design.icon}</div>
+                    <div class="bottle-design-name">${design.name}</div>
+                    ${design.unlocked ? 
+                        `<button class="purchase-btn ${currentBottleDesign === design.icon ? 'success' : 'primary'}" 
+                                onclick="equipBottleDesign('${design.id}')" 
+                                ${currentBottleDesign === design.icon ? 'disabled' : ''}>
+                            ${currentBottleDesign === design.icon ? 'Equipped' : 'Equip'}
+                        </button>` :
+                        `<div class="bottle-design-price">${design.price} 🪙</div>
+                         <button class="purchase-btn" onclick="purchaseBottleDesign('${design.id}')" 
+                                 ${playerCoins >= design.price ? '' : 'disabled'}>
+                            Purchase
+                         </button>`
+                    }
+                `;
+                
+                container.appendChild(designElement);
+            });
+        }
+
+        function purchaseBottleDesign(designId) {
+            const design = bottleDesigns.find(d => d.id === designId);
+            if (design && playerCoins >= design.price && !design.unlocked) {
+                playerCoins -= design.price;
+                design.unlocked = true;
+                unlockedBottleDesigns.push(design.icon);
+                updateCoinsDisplay();
+                renderBottleDesigns();
+                
+                // Update achievements
+                updateAchievementProgress('bottle_collector', 1);
+                updateAchievementProgress('bottle_master', 1);
+                
+                savePlayerProgress();
+                showToast(`Unlocked ${design.name}! 🎉`, 'success');
+            }
+        }
+
+        function equipBottleDesign(designId) {
+            const design = bottleDesigns.find(d => d.id === designId);
+            if (design && design.unlocked) {
+                currentBottleDesign = design.icon;
+                renderBottleDesigns();
+                savePlayerProgress();
+                showToast(`Equipped ${design.name}!`, 'info');
+            }
+        }
+
+        // Power-ups
+        function usePowerUp(type) {
+            if (turn !== 'player' || powerUps[type].uses <= 0) return;
+            powerUps[type].uses--;
+            powerUps[type].active = true;
+            showToast(`${type.charAt(0).toUpperCase() + type.slice(1)} activated!`, 'success');
+            updatePowerUpButtons();
+        }
+
+        function updatePowerUpButtons() {
+            Object.keys(powerUps).forEach(type => {
+                const button = document.getElementById(`${type}-btn`);
+                if (button) {
+                    button.textContent = `${type.charAt(0).toUpperCase() + type.slice(1)} (${powerUps[type].uses})`;
+                    button.disabled = powerUps[type].uses <= 0 || turn !== 'player';
+                }
+            });
+        }
+
+        // Achievements
+        function showAchievements() {
+            showScreen('achievements-screen');
+            renderAchievements();
+        }
+
+        function renderAchievements() {
+            const container = document.getElementById('achievements-container');
+            container.innerHTML = '';
+
+            achievements.forEach(achievement => {
+                const achievementElement = document.createElement('div');
+                achievementElement.className = `achievement ${achievement.unlocked ? 'unlocked' : ''}`;
+                
+                const progressPercent = (achievement.progress / achievement.target) * 100;
+                
+                achievementElement.innerHTML = `
+                    <div class="achievement-icon">${achievement.icon}</div>
+                    <div class="achievement-name">${achievement.name}</div>
+                    <div class="achievement-description">${achievement.description}</div>
+                    <div class="achievement-progress">
+                        <div class="achievement-progress-fill" style="width: ${progressPercent}%"></div>
+                    </div>
+                    <div>${achievement.progress}/${achievement.target}</div>
+                `;
+                
+                container.appendChild(achievementElement);
+            });
+        }
+
+        function updateAchievementProgress(achievementId, increment) {
+            const achievement = achievements.find(a => a.id === achievementId);
+            if (achievement && !achievement.unlocked) {
+                achievement.progress += increment;
+                if (achievement.progress >= achievement.target) {
+                    achievement.unlocked = true;
+                    awardCoins(25); // Reward for unlocking achievement
+                    showToast(`Achievement Unlocked: ${achievement.name}! +25 Coins`, 'success');
+                }
+                savePlayerProgress();
+            }
+        }
+
+        // Leaderboard
+        function showLeaderboard() {
+            showScreen('leaderboard-screen');
+            renderLeaderboard();
+        }
+
+        function renderLeaderboard() {
+            const container = document.getElementById('leaderboard-container');
+            container.innerHTML = '';
+
+            // Sort leaderboard by score (descending)
+            const sortedLeaderboard = [...leaderboard].sort((a, b) => b.score - a.score);
+            
+            sortedLeaderboard.forEach((entry, index) => {
+                const entryElement = document.createElement('div');
+                entryElement.className = `leaderboard-entry ${entry.isCurrentPlayer ? 'current-player' : ''}`;
+                
+                entryElement.innerHTML = `
+                    <div class="leaderboard-position">${index + 1}</div>
+                    <div class="leaderboard-player">${entry.name}</div>
+                    <div class="leaderboard-score">${entry.score}</div>
+                `;
+                
+                container.appendChild(entryElement);
+            });
+        }
+
+        function updateLeaderboard(score) {
+            const playerEntry = leaderboard.find(entry => entry.isCurrentPlayer);
+            if (playerEntry) {
+                playerEntry.score = Math.max(playerEntry.score, score);
+            }
+            savePlayerProgress();
+        }
+
+        // Daily Rewards
+        function renderDailyRewards() {
+            const container = document.getElementById('daily-rewards-container');
+            container.innerHTML = '';
+
+            const today = new Date().toDateString();
+            const days = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+
+            dailyRewards.forEach((reward, index) => {
+                const rewardElement = document.createElement('div');
+                const isClaimed = index < currentRewardDay;
+                const isToday = index === currentRewardDay && lastRewardDate !== today;
+                
+                rewardElement.className = `daily-reward ${isClaimed ? 'claimed' : ''} ${isToday ? 'today' : ''}`;
+                rewardElement.innerHTML = `
+                    <div class="daily-reward-day">${days[index]}</div>
+                    <div class="daily-reward-amount">${reward}</div>
+                `;
+                
+                if (isToday) {
+                    rewardElement.addEventListener('click', () => claimDailyReward(index));
+                }
+                
+                container.appendChild(rewardElement);
+            });
+        }
+
+        function claimDailyReward(dayIndex) {
+            const today = new Date().toDateString();
+            if (lastRewardDate !== today && dayIndex === currentRewardDay) {
+                const reward = dailyRewards[dayIndex];
+                awardCoins(reward);
+                currentRewardDay = (currentRewardDay + 1) % 7;
+                lastRewardDate = today;
+                renderDailyRewards();
+                savePlayerProgress();
+                showToast(`Daily reward claimed! +${reward} Coins`, 'success');
+            }
+        }
+
+        // Missions
+        function renderActiveMissions() {
+            const container = document.getElementById('active-missions-container');
+            container.innerHTML = '';
+
+            activeMissions.forEach(mission => {
+                if (!mission.completed) {
+                    const missionElement = document.createElement('div');
+                    missionElement.className = `mission ${mission.completed ? 'completed' : ''}`;
+                    
+                    const progressPercent = (mission.progress / mission.target) * 100;
+                    
+                    missionElement.innerHTML = `
+                        <div class="mission-info">
+                            <div class="mission-name">${mission.name}</div>
+                            <div class="mission-description">${mission.description}</div>
+                            <div class="mission-progress">
+                                <div class="mission-progress-fill" style="width: ${progressPercent}%"></div>
+                            </div>
+                        </div>
+                        <div class="mission-reward">
+                            <span>${mission.reward}</span>
+                            <span>🪙</span>
+                        </div>
+                    `;
+                    
+                    container.appendChild(missionElement);
+                }
+            });
+        }
+
+        function updateMissionProgress(missionId, increment) {
+            const mission = activeMissions.find(m => m.id === missionId);
+            if (mission && !mission.completed) {
+                mission.progress += increment;
+                if (mission.progress >= mission.target) {
+                    mission.completed = true;
+                    awardCoins(mission.reward);
+                    showToast(`Mission Complete: ${mission.name}! +${mission.reward} Coins`, 'success');
+                }
+                savePlayerProgress();
+            }
+        }
+
+        // Particle Effects
+        function createParticles(element, count, color) {
+            const container = document.getElementById('particles-container');
+            const rect = element.getBoundingClientRect();
+            
+            for (let i = 0; i < count; i++) {
+                const particle = document.createElement('div');
+                particle.className = 'particle';
+                particle.style.width = `${Math.random() * 5 + 2}px`;
+                particle.style.height = particle.style.width;
+                particle.style.backgroundColor = color;
+                particle.style.left = `${rect.left + rect.width / 2}px`;
+                particle.style.top = `${rect.top + rect.height / 2}px`;
+                
+                container.appendChild(particle);
+                
+                const angle = Math.random() * Math.PI * 2;
+                const distance = Math.random() * 50 + 20;
+                const duration = Math.random() * 1000 + 500;
+                
+                particle.animate([
+                    { 
+                        transform: 'translate(0, 0) scale(1)',
+                        opacity: 1
+                    },
+                    { 
+                        transform: `translate(${Math.cos(angle) * distance}px, ${Math.sin(angle) * distance}px) scale(0)`,
+                        opacity: 0
+                    }
+                ], {
+                    duration: duration,
+                    easing: 'ease-out',
+                    fill: 'forwards'
+                });
+                
+                setTimeout(() => {
+                    particle.remove();
+                }, duration);
+            }
+        }
+
+        // Sound System
+        function toggleSound() {
+            soundEnabled = !soundEnabled;
+            const btn = document.getElementById('sound-toggle');
+            btn.innerHTML = soundEnabled ? '<i class="fas fa-volume-up"></i>' : '<i class="fas fa-volume-mute"></i>';
+            savePlayerProgress();
+        }
+
+        // UI Updates
+        function updateTurnIndicator() {
+            const indicator = document.getElementById('turn-indicator');
+            if (turn === 'player') {
+                indicator.innerHTML = '<i class="fas fa-bullseye"></i> Your Turn';
+                indicator.classList.add('pulse');
+                indicator.style.borderColor = 'var(--primary)';
+            } else {
+                indicator.innerHTML = '<i class="fas fa-robot"></i> AI\'s Turn';
+                indicator.classList.remove('pulse');
+                indicator.style.borderColor = 'var(--error)';
+            }
+        }
+
+        function updateScores() {
+            const totalBottles = gridSize; 
+            document.getElementById('player-score').textContent = playerScore;
+            document.getElementById('ai-score').textContent = aiScore;
+            document.getElementById('player-progress').style.width = `${(playerScore / totalBottles) * 100}%`;
+            document.getElementById('ai-progress').style.width = `${(aiScore / totalBottles) * 100}%`;
+        }
+
+        function showGameOver() {
+            if (gameTimer) clearInterval(gameTimer);
+            
+            // Update leaderboard with final score
+            updateLeaderboard(playerScore * 10 + currentStreak * 5);
+            
+            showScreen('gameover-screen');
+            const titleEl = document.getElementById('winner-text');
+            const messageEl = document.getElementById('winner-message');
+            
+            if (winner === 'player') {
+                titleEl.textContent = 'MISSION ACCOMPLISHED';
+                titleEl.style.color = 'var(--success)';
+                messageEl.textContent = 'Strategic victory confirmed. All objective targets found.';
+                createParticles(titleEl, 50, '#10b981');
+            } else {
+                titleEl.textContent = 'MISSION FAILED';
+                titleEl.style.color = 'var(--error)';
+                messageEl.textContent = 'Deepmind AI compromised our fleet. Objective lost.';
+                createParticles(titleEl, 50, '#f43f5e');
+            }
+            
+            const totalBottles = gridSize; 
+            document.getElementById('final-player-score').textContent = `${playerScore}/${totalBottles}`;
+            document.getElementById('final-ai-score').textContent = `${aiScore}/${totalBottles}`;
+        }
+
+        // Utility Functions
+        function returnToMenu() {
+            if (gameTimer) clearInterval(gameTimer);
+            showScreen('menu-screen');
+        }
+
+        function showStreakReward(amount) {
+            document.getElementById('reward-amount').textContent = `+${amount} 🪙`;
+            document.getElementById('streak-reward-popup').style.display = 'block';
+            createParticles(document.getElementById('streak-reward-popup'), 20, '#ffd700');
+        }
+
+        function closeRewardPopup() {
+            document.getElementById('streak-reward-popup').style.display = 'none';
+        }
+
+        // Save/Load Progress
+        function savePlayerProgress() {
+            const progress = {
+                coins: playerCoins,
+                streak: currentStreak,
+                bottleDesign: currentBottleDesign,
+                unlockedDesigns: unlockedBottleDesigns,
+                achievements: achievements,
+                lastRewardDate: lastRewardDate,
+                currentRewardDay: currentRewardDay,
+                leaderboard: leaderboard,
+                soundEnabled: soundEnabled
+            };
+            localStorage.setItem('bottleHuntProgress', JSON.stringify(progress));
+        }
+
+        function loadPlayerProgress() {
+            const saved = localStorage.getItem('bottleHuntProgress');
+            if (saved) {
+                const progress = JSON.parse(saved);
+                playerCoins = progress.coins || 0;
+                currentStreak = progress.streak || 0;
+                currentBottleDesign = progress.bottleDesign || '🍾';
+                unlockedBottleDesigns = progress.unlockedDesigns || ['🍾'];
+                lastRewardDate = progress.lastRewardDate || null;
+                currentRewardDay = progress.currentRewardDay || 0;
+                soundEnabled = progress.soundEnabled !== undefined ? progress.soundEnabled : true;
+                
+                if (progress.achievements) {
+                    progress.achievements.forEach(savedAchievement => {
+                        const achievement = achievements.find(a => a.id === savedAchievement.id);
+                        if (achievement) {
+                            achievement.unlocked = savedAchievement.unlocked;
+                            achievement.progress = savedAchievement.progress;
+                        }
+                    });
+                }
+                
+                if (progress.leaderboard) {
+                    leaderboard = progress.leaderboard;
+                }
+                
+                bottleDesigns.forEach(design => {
+                    design.unlocked = unlockedBottleDesigns.includes(design.icon) || design.price === 0;
+                });
+                
+                updateStreakDisplay();
+                updateCoinsDisplay();
+                renderDailyRewards();
+            }
+        }
+
+        // Initialize Game
+        function init() {
+            showScreen('menu-screen');
+            setTheme('aqua');
+            setGridSize(4);
+            loadPlayerProgress();
+            updateStreakDisplay();
+            updateCoinsDisplay();
+            renderDailyRewards();
+            
+            document.querySelectorAll('.theme-option').forEach(option => {
+                option.addEventListener('click', () => setTheme(option.dataset.theme));
+            });
+            
+            document.querySelectorAll('.grid-size-option').forEach(option => {
+                option.addEventListener('click', () => setGridSize(option.dataset.size));
+            });
+            
+            document.getElementById('sound-toggle').addEventListener('click', toggleSound);
+        }
+
+        // Start the game
+        init();
+    </script>
+</body>
+</html>

@@ -1,0 +1,156 @@
+:root {
+    --gold: #d4af37;
+    --dark: #0a0a0a;
+    --surface: #1a1a1a;
+    --text: #ffffff;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Outfit', sans-serif;
+}
+
+body {
+    background: var(--dark);
+    color: var(--text);
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    overflow: hidden;
+}
+
+.luxury-bg {
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    background: radial-gradient(circle at center, #1e1e1e 0%, #050505 100%);
+    z-index: -1;
+}
+
+.container {
+    width: 100%;
+    max-width: 600px;
+    padding: 40px 20px;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+}
+
+header { margin-bottom: 40px; }
+.logo { font-size: 2.5rem; font-weight: 800; letter-spacing: 2px; }
+.logo span { color: var(--gold); }
+header p { color: #666; font-size: 0.9rem; text-transform: uppercase; letter-spacing: 2px; }
+
+.game-area {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.table-surface {
+    position: relative;
+    width: 300px;
+    height: 300px;
+    background: var(--surface);
+    border: 4px solid #333;
+    border-radius: 50%;
+    margin: 0 auto;
+    box-shadow: 0 0 50px rgba(0,0,0,0.5), inset 0 0 30px rgba(0,0,0,1);
+}
+
+.player-slots {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+}
+
+.slot {
+    position: absolute;
+    width: 50px;
+    height: 50px;
+    background: #333;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    border: 2px solid transparent;
+    transition: all 0.3s;
+}
+
+.slot.active { border-color: var(--gold); box-shadow: 0 0 15px var(--gold); }
+
+/* Circle positioning */
+.p1 { top: -25px; left: calc(50% - 25px); }
+.p2 { right: -25px; top: calc(50% - 25px); }
+.p3 { bottom: -25px; left: calc(50% - 25px); }
+.p4 { left: -25px; top: calc(50% - 25px); }
+
+.bottle-container {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 40px;
+    height: 180px;
+    margin-top: -90px;
+    margin-left: -20px;
+    transition: transform 3s cubic-bezier(0.15, 0, 0.15, 1);
+}
+
+.bottle {
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(to right, #222, #444, #222);
+    border-radius: 20px 20px 10px 10px;
+    border: 1px solid #555;
+    position: relative;
+}
+
+.bottle::before {
+    content: '';
+    position: absolute;
+    top: -15px;
+    left: 10px;
+    width: 20px;
+    height: 30px;
+    background: #111;
+    border-radius: 5px;
+}
+
+.bottle-label {
+    position: absolute;
+    top: 60px;
+    left: 10%;
+    width: 80%;
+    height: 40px;
+    background: var(--gold);
+    color: black;
+    font-weight: 800;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.game-controls { margin-top: 60px; }
+
+#spin-btn {
+    background: var(--gold);
+    color: black;
+    border: none;
+    padding: 15px 40px;
+    font-size: 1.2rem;
+    font-weight: 800;
+    border-radius: 99px;
+    cursor: pointer;
+    box-shadow: 0 10px 20px rgba(212, 175, 55, 0.3);
+    transition: all 0.2s;
+}
+
+#spin-btn:hover { transform: translateY(-3px) scale(1.05); }
+
+.hidden { display: none; }

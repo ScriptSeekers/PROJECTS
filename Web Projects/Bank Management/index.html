@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ScriptSeekers Bank | Premium Management</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="glass-bg"></div>
+    <div class="container">
+        <aside class="sidebar">
+            <div class="logo">
+                <div class="logo-icon">S</div>
+                <h1>ScriptSeekers<span>Bank</span></h1>
+            </div>
+            <nav>
+                <button class="nav-btn active" id="dash-tab">Dashboard</button>
+                <button class="nav-btn" id="accounts-tab">Accounts</button>
+                <button class="nav-btn" id="transactions-tab">Transactions</button>
+            </nav>
+            <div class="sidebar-footer">
+                <button class="action-btn" id="add-account-btn">+ New Account</button>
+            </div>
+        </aside>
+
+        <main class="main-content">
+            <header>
+                <div class="search-bar">
+                    <input type="text" placeholder="Search accounts...">
+                </div>
+                <div class="user-profile">
+                    <div class="notification-dot"></div>
+                    <div class="avatar">AV</div>
+                </div>
+            </header>
+
+            <section id="dashboard" class="content-section">
+                <div class="welcome">
+                    <h2>Welcome back, <span id="current-user">Arpit Vishwakarma</span></h2>
+                    <p>Here is what's happening with your accounts today.</p>
+                </div>
+                
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <p>Total Balance</p>
+                        <h3 id="total-balance">$0.00</h3>
+                        <div class="trend up">+2.4%</div>
+                    </div>
+                    <div class="stat-card">
+                        <p>Total Deposits</p>
+                        <h3 id="total-deposits">$0.00</h3>
+                    </div>
+                    <div class="stat-card">
+                        <p>Total Withdrawals</p>
+                        <h3 id="total-withdrawals">$0.00</h3>
+                    </div>
+                </div>
+
+                <div class="main-grid">
+                    <div class="recent-accounts">
+                        <div class="section-header">
+                            <h3>My Accounts</h3>
+                            <a href="#">View All</a>
+                        </div>
+                        <div class="account-list" id="account-list-container">
+                            <!-- Accounts will be injected here -->
+                        </div>
+                    </div>
+                    <div class="upcoming-transactions">
+                        <div class="section-header">
+                            <h3>Recent Activity</h3>
+                        </div>
+                        <div class="transaction-list" id="global-txn-list">
+                            <!-- Transactions will be injected here -->
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Detail Sections (Hidden by default) -->
+            <section id="account-details" class="content-section hidden">
+                <div class="detail-header">
+                    <button class="back-btn" id="back-to-dash">← Back</button>
+                    <div class="account-info">
+                        <h2 id="detail-name">Account Name</h2>
+                        <p id="detail-no">#000000</p>
+                    </div>
+                    <div class="detail-actions">
+                        <button class="btn btn-primary" id="deposit-btn">Deposit</button>
+                        <button class="btn btn-secondary" id="withdraw-btn">Withdraw</button>
+                    </div>
+                </div>
+                <div class="transaction-history">
+                    <h3>Transaction History</h3>
+                    <table id="txn-table">
+                        <thead>
+                            <tr>
+                                <th>Date</th>
+                                <th>Type</th>
+                                <th>Description</th>
+                                <th>Amount</th>
+                            </tr>
+                        </thead>
+                        <tbody id="txn-tbody">
+                            <!-- Txns will be injected here -->
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <!-- Modals -->
+    <div id="modal-overlay" class="modal-overlay hidden">
+        <div class="modal">
+            <h2 id="modal-title">Add New Account</h2>
+            <div class="form-group">
+                <label for="acc-name">Account Holder Name</label>
+                <input type="text" id="acc-name" placeholder="John Doe">
+            </div>
+            <div class="form-group">
+                <label for="acc-no">Account Number</label>
+                <input type="text" id="acc-no" placeholder="Enter number...">
+            </div>
+            <div class="modal-actions">
+                <button class="btn btn-ghost" id="cancel-modal">Cancel</button>
+                <button class="btn btn-primary" id="save-account">Save Account</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="txn-modal-overlay" class="modal-overlay hidden">
+        <div class="modal">
+            <h2 id="txn-modal-title">New Transaction</h2>
+            <div class="form-group">
+                <label for="txn-amount">Amount</label>
+                <input type="number" id="txn-amount" placeholder="0.00">
+            </div>
+            <div class="form-group">
+                <label for="txn-desc">Description</label>
+                <input type="text" id="txn-desc" placeholder="Monthly rent...">
+            </div>
+            <div class="modal-actions">
+                <button class="btn btn-ghost" id="cancel-txn-modal">Cancel</button>
+                <button class="btn btn-primary" id="save-txn">Confirm</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+    <footer style="
+        position:absolute;
+        bottom:10px;
+        right:20px;
+        font-size:12px;
+        opacity:0.6;
+        pointer-events:none;
+    ">
+        © 2025 Arpit Vishwakarma AKA ScriptSeekers
+    </footer>
+</body>
+</html>

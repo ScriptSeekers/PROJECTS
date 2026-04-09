@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ScriptSeekers Events | Secure Campus Management</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <!-- Auth Experience -->
+    <div id="auth-screen" class="auth-container">
+        <div class="auth-card glass animate-fade">
+            <div style="text-align: center; margin-bottom: 40px;">
+                <h1 class="gradient-text" style="font-size: 2rem;">ScriptSeekers<span>Events</span></h1>
+                <p style="color: var(--text-muted);">Secure Campus Portal</p>
+            </div>
+
+            <div class="auth-tabs">
+                <div class="auth-tab active" data-role="STUDENT" onclick="setRole('STUDENT')">Student</div>
+                <div class="auth-tab" data-role="TEACHER" onclick="setRole('TEACHER')">Teacher</div>
+                <div class="auth-tab" data-role="LEADER" onclick="setRole('LEADER')">Event Leader</div>
+                <div class="auth-tab" data-role="PRINCIPAL" onclick="setRole('PRINCIPAL')">Principal</div>
+            </div>
+
+            <div id="login-form">
+                <div class="input-group">
+                    <label>Email Address</label>
+                    <input type="email" id="login-email" placeholder="name@college.com">
+                </div>
+                <div class="input-group">
+                    <label>Password</label>
+                    <input type="password" id="login-pass" placeholder="••••••••">
+                </div>
+                <button class="btn btn-primary" style="width: 100%; justify-content: center;" onclick="handleLogin()">
+                    Sign In <i class="fas fa-arrow-right"></i>
+                </button>
+                
+                <p id="reg-toggle" style="text-align: center; margin-top: 20px; font-size: 0.9rem; cursor: pointer;">
+                    Don't have an account? <span style="color: var(--primary)" onclick="toggleAuth(true)">Register here</span>
+                </p>
+            </div>
+
+            <div id="register-form" style="display: none;">
+                <div class="input-group">
+                    <label>Full Name</label>
+                    <input type="text" id="reg-name" placeholder="John Doe">
+                </div>
+                <div class="input-group">
+                    <label>Email Address</label>
+                    <input type="email" id="reg-email" placeholder="john@college.com">
+                </div>
+                <div class="input-group">
+                    <label>Password</label>
+                    <input type="password" id="reg-pass" placeholder="••••••••">
+                </div>
+                <button class="btn btn-primary" style="width: 100%; justify-content: center;" onclick="handleRegister()">
+                    Create Account <i class="fas fa-user-plus"></i>
+                </button>
+                <p style="text-align: center; margin-top: 20px; font-size: 0.9rem; cursor: pointer;">
+                    Already have an account? <span style="color: var(--primary)" onclick="toggleAuth(false)">Login</span>
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Application UI -->
+    <div id="app-screen" class="app-container" style="display: none;">
+        <aside class="sidebar">
+            <div style="margin-bottom: 40px; text-align: center;">
+                <h2 class="gradient-text">ScriptSeekers</h2>
+            </div>
+            
+            <nav id="nav-links">
+                <!-- Links injected via JS based on role -->
+            </nav>
+
+            <div style="margin-top: auto; padding-top: 40px;">
+                <button class="btn" style="background: rgba(239, 68, 68, 0.1); color: var(--danger); width: 100%;" onclick="logout()">
+                    <i class="fas fa-sign-out-alt"></i> Logout
+                </button>
+            </div>
+        </aside>
+
+        <main class="main-content">
+            <header class="header">
+                <div>
+                    <h1 id="page-title">Dashboard</h1>
+                    <p id="user-welcome" style="color: var(--text-muted)"></p>
+                </div>
+                <div id="header-actions">
+                    <!-- Dynamic actions -->
+                </div>
+            </header>
+
+            <section id="dashboard-content">
+                <!-- View-specific content injected here -->
+            </section>
+        </main>
+    </div>
+
+    <!-- Global Modal Placeholder -->
+    <div id="modal-container" style="display: none;"></div>
+
+    <script src="db.js" type="module"></script>
+    <script src="app.js" type="module"></script>
+    <footer style="
+        position:fixed;
+        bottom:10px;
+        right:20px;
+        font-size:12px;
+        opacity:0.6;
+        pointer-events:none;
+        z-index: 1000;
+    ">
+        © 2025 Arpit Vishwakarma AKA ScriptSeekers
+    </footer>
+</body>
+</html>

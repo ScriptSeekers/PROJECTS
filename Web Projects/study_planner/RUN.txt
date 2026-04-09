@@ -1,0 +1,2 @@
+cd AIBSP
+.\.venv\Scripts\python.exe app.py

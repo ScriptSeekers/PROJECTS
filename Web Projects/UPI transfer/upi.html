@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ScriptSeekers Pay | Instant UPI QR</title>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #6366f1;
+            --secondary: #ec4899;
+            --bg-dark: #0f172a;
+            --card-bg: rgba(30, 41, 59, 0.7);
+            --glass-border: rgba(255, 255, 255, 0.1);
+            --text-main: #f8fafc;
+            --text-dim: #94a3b8;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Outfit', sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-dark);
+            color: var(--text-main);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            overflow: hidden;
+        }
+
+        .blur-bg {
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at 10% 20%, #4338ca 0%, transparent 40%),
+                        radial-gradient(circle at 90% 80%, #9d174d 0%, transparent 40%);
+            opacity: 0.15;
+            z-index: -1;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 400px;
+            background: var(--card-bg);
+            backdrop-filter: blur(20px);
+            border: 1px solid var(--glass-border);
+            border-radius: 32px;
+            padding: 40px;
+            box-shadow: 0 40px 100px -20px rgba(0,0,0,0.5);
+            text-align: center;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 800;
+            margin-bottom: 30px;
+        }
+
+        .logo span {
+            color: var(--primary);
+        }
+
+        h1 {
+            font-size: 1.5rem;
+            margin-bottom: 10px;
+        }
+
+        p.subtitle {
+            color: var(--text-dim);
+            font-size: 0.9rem;
+            margin-bottom: 30px;
+        }
+
+        .form-group {
+            text-align: left;
+            margin-bottom: 25px;
+        }
+
+        label {
+            display: block;
+            font-size: 0.85rem;
+            font-weight: 600;
+            margin-bottom: 10px;
+            color: var(--text-dim);
+        }
+
+        input {
+            width: 100%;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--glass-border);
+            padding: 15px 20px;
+            border-radius: 16px;
+            color: white;
+            font-size: 1.2rem;
+            outline: none;
+            transition: all 0.3s;
+        }
+
+        input:focus {
+            border-color: var(--primary);
+            background: rgba(255, 255, 255, 0.08);
+            box-shadow: 0 0 20px rgba(99, 102, 241, 0.2);
+        }
+
+        .generate-btn {
+            width: 100%;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            border: none;
+            color: white;
+            padding: 18px;
+            border-radius: 16px;
+            font-size: 1.1rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s;
+            box-shadow: 0 10px 20px rgba(99, 102, 241, 0.2);
+        }
+
+        .generate-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 15px 30px rgba(99, 102, 241, 0.3);
+        }
+
+        #qrcode {
+            margin-top: 30px;
+            display: flex;
+            justify-content: center;
+            background: white;
+            padding: 20px;
+            border-radius: 20px;
+            animation: popIn 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        @keyframes popIn {
+            from { transform: scale(0.8); opacity: 0; }
+            to { transform: scale(1); opacity: 1; }
+        }
+
+        .footer-note {
+            margin-top: 30px;
+            font-size: 0.85rem;
+            color: var(--text-dim);
+        }
+
+        .footer-note strong {
+            color: var(--text-main);
+        }
+
+        .hidden { display: none; }
+    </style>
+</head>
+<body>
+    <div class="blur-bg"></div>
+    <div class="container">
+        <div class="logo">ScriptSeekers<span>Pay</span></div>
+        <h1>QR Generator</h1>
+        <p class="subtitle">Secure instant UPI payment codes</p>
+        
+        <div class="form-group">
+            <label>Amount (INR)</label>
+            <input type="number" id="amount" placeholder="e.g. 500.00" min="1" step="0.01">
+        </div>
+
+        <button class="generate-btn" id="generateBtn">Generate Secure QR</button>
+
+        <div id="qrcode" class="hidden"></div>
+        
+        <div class="footer-note">
+            UPI ID: <strong>Arpitz@fam</strong>
+        </div>
+        <div style="margin-top:20px; font-size:12px; opacity:0.6; color:var(--text-dim);">
+            © 2025 Arpit Vishwakarma AKA ScriptSeekers
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+    <script>
+        document.getElementById('generateBtn').onclick = () => {
+            const upiId = "Arpitz@fam";
+            const amountInput = document.getElementById('amount');
+            const amountVal = parseFloat(amountInput.value);
+            const qrBox = document.getElementById('qrcode');
+
+            if (isNaN(amountVal) || amountVal <= 0) {
+                alert('Please enter a valid amount.');
+                return;
+            }
+
+            const upiUri = `upi://pay?pa=${encodeURIComponent(upiId)}&am=${amountVal.toFixed(2)}&cu=INR`;
+            
+            qrBox.innerHTML = '';
+            qrBox.classList.remove('hidden');
+            
+            new QRCode(qrBox, {
+                text: upiUri,
+                width: 200,
+                height: 200,
+                colorDark: "#0f172a",
+                colorLight: "#ffffff",
+                correctLevel: QRCode.CorrectLevel.H
+            });
+        };
+    </script>
+</body>
+</html>

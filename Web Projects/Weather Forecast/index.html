@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ScriptSeekers Weather | Hyperlocal Insights</title>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="dynamic-bg" id="weather-bg"></div>
+    
+    <div class="container">
+        <header>
+            <div class="search-box">
+                <input type="text" id="city-input" placeholder="Search city (e.g. New York, Tokyo)">
+                <button id="search-btn">🔍</button>
+            </div>
+        </header>
+
+        <main id="weather-display" class="hidden">
+            <section class="current-weather">
+                <div class="main-info">
+                    <h1 id="city-name">San Francisco</h1>
+                    <p id="current-date">Monday, 14 April</p>
+                    <div class="temp-row">
+                        <span id="temp-val">18</span><span class="unit">°C</span>
+                    </div>
+                    <p id="weather-desc">Partly Cloudy</p>
+                </div>
+                <div class="weather-visual">
+                    <div class="cloud-icon" id="main-icon">⛅</div>
+                </div>
+            </section>
+
+            <section class="details-grid">
+                <div class="detail-card">
+                    <small>Humidity</small>
+                    <p id="humidity">64%</p>
+                </div>
+                <div class="detail-card">
+                    <small>Wind Speed</small>
+                    <p id="wind">12 km/h</p>
+                </div>
+                <div class="detail-card">
+                    <small>Visibility</small>
+                    <p id="visibility">10 km</p>
+                </div>
+                <div class="detail-card">
+                    <small>UV Index</small>
+                    <p id="uv">Low</p>
+                </div>
+            </section>
+
+            <section class="forecast">
+                <h3>7-Day Forecast</h3>
+                <div class="forecast-scroll" id="forecast-container">
+                    <!-- Forecast items -->
+                </div>
+            </section>
+        </main>
+
+        <div id="loading" class="initial-msg">
+            <h2>ScriptSeekers<span>Weather</span></h2>
+            <p>Enter a city to see the magic.</p>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+    <footer style="
+        position:fixed;
+        bottom:10px;
+        left:0;
+        width:100%;
+        text-align:center;
+        font-size:12px;
+        opacity:0.6;
+        pointer-events:none;
+        color: white;
+    ">
+        © 2025 Arpit Vishwakarma AKA ScriptSeekers
+    </footer>
+</body>
+</html>

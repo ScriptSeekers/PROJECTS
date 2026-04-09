@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ScriptSeekers Guard | Advanced Password Analytics</title>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="cyber-bg"></div>
+    <div class="glow-orb"></div>
+    
+    <div class="container">
+        <header>
+            <div class="shield-logo">
+                <span style="font-size: 2rem;">SS</span>
+            </div>
+            <h1>ScriptSeekers<span>Guard</span></h1>
+            <p>Cryptographic Strength Analyzer</p>
+        </header>
+
+        <main class="analyzer-box">
+            <div class="input-wrapper">
+                <input type="password" id="pw-input" placeholder="Type your secret passphrase..." autofocus>
+                <button id="toggle-visibility" class="icon-btn">
+                    <svg id="eye-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+                </button>
+            </div>
+
+            <div class="meter-container">
+                <div class="meter-bar">
+                    <div id="strength-fill" class="fill"></div>
+                </div>
+                <div class="meter-labels">
+                    <span id="strength-text">Awaiting Input</span>
+                    <span id="strength-percent">0%</span>
+                </div>
+            </div>
+
+            <div class="criteria-grid">
+                <div class="criterion" id="crit-length">
+                    <div class="check-dot"></div>
+                    <span>8+ Characters</span>
+                </div>
+                <div class="criterion" id="crit-upper">
+                    <div class="check-dot"></div>
+                    <span>Uppercase</span>
+                </div>
+                <div class="criterion" id="crit-number">
+                    <div class="check-dot"></div>
+                    <span>Numbers</span>
+                </div>
+                <div class="criterion" id="crit-symbol">
+                    <div class="check-dot"></div>
+                    <span>Symbols</span>
+                </div>
+            </div>
+
+            <div class="security-insights">
+                <h3>Insights</h3>
+                <ul id="insight-list">
+                    <li>Ready to analyze your password security...</li>
+                </ul>
+            </div>
+        </main>
+
+        <footer>
+            <p>© 2025 Arpit Vishwakarma AKA ScriptSeekers</p>
+        </footer>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

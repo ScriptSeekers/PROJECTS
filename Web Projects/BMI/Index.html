@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ScriptSeekers BMI | Ultimate Health Insights</title>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="glow-bg"></div>
+    <div class="app-container">
+        <header>
+            <div class="logo">
+                <span class="icon">🚀</span>
+                <h1>ScriptSeekers<span>BMI</span></h1>
+            </div>
+            <p>Smart Body Mass Analytics</p>
+        </header>
+
+        <main class="calculator-card">
+            <div class="input-section">
+                <div class="input-row">
+                    <div class="form-group">
+                        <label>Height Unit</label>
+                        <div class="toggle-group" id="height-unit-toggle">
+                            <button class="toggle-btn active" data-unit="cm">CM</button>
+                            <button class="toggle-btn" data-unit="ft-in">FT/IN</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="input-row" id="height-inputs">
+                    <div class="form-group">
+                        <label>Height</label>
+                        <input type="number" id="height" placeholder="175">
+                    </div>
+                </div>
+
+                <div class="input-row">
+                    <div class="form-group">
+                        <label>Weight Unit</label>
+                        <div class="toggle-group" id="weight-unit-toggle">
+                            <button class="toggle-btn active" data-unit="kg">KG</button>
+                            <button class="toggle-btn" data-unit="lbs">LBS</button>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>Weight</label>
+                        <input type="number" id="weight" placeholder="70">
+                    </div>
+                </div>
+
+                <div class="input-row">
+                    <div class="form-group">
+                        <label>Age</label>
+                        <input type="number" id="age" placeholder="25">
+                    </div>
+                    <div class="form-group">
+                        <label>Gender</label>
+                        <div class="toggle-group gender-toggle">
+                            <button class="toggle-btn active">Male</button>
+                            <button class="toggle-btn">Female</button>
+                        </div>
+                    </div>
+                </div>
+
+                <button id="calculate-btn" class="main-cta">Analyze My Health</button>
+            </div>
+
+            <div class="result-section hidden" id="result-view">
+                <div class="gauge-container">
+                    <div class="gauge">
+                        <div class="gauge-bar"></div>
+                        <div class="gauge-needle" id="needle"></div>
+                        <div class="gauge-center">
+                            <span id="bmi-value">22.4</span>
+                            <small>BMI</small>
+                        </div>
+                    </div>
+                    <div class="gauge-labels">
+                        <span>Under</span>
+                        <span>Normal</span>
+                        <span>Over</span>
+                        <span>Obese</span>
+                    </div>
+                </div>
+
+                <div class="status-badge" id="bmi-category">Normal Weight</div>
+                
+                <div class="analysis-box">
+                    <h3>Health Insights</h3>
+                    <p id="health-tip">You're in the healthy range! Maintain your lifestyle with a balanced diet and regular exercise.</p>
+                </div>
+
+                <button class="btn-secondary" id="reset-btn">Recalculate</button>
+            </div>
+        </main>
+
+        <section class="info-grid">
+            <div class="info-card">
+                <h4>What is BMI?</h4>
+                <p>Body Mass Index is a simple calculation using a person's height and weight. It's used as a screening tool for body fatness.</p>
+            </div>
+            <div class="info-card">
+                <h4>Why it matters?</h4>
+                <p>BMI provides a reliable indicator of health risks associated with being over or underweight.</p>
+            </div>
+        </section>
+    </div>
+
+    <script src="script.js"></script>
+    <footer style="
+        position:fixed;
+        bottom:10px;
+        left:0;
+        width:100%;
+        text-align:center;
+        font-size:12px;
+        opacity:0.6;
+        pointer-events:none;
+        color: var(--text-muted);
+    ">
+        © 2025 Arpit Vishwakarma AKA ScriptSeekers
+    </footer>
+</body>
+</html>

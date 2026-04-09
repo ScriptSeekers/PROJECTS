@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ScriptSeekers To-Do | Master Your Productivity</title>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <div class="blur-bg"></div>
+    <div class="container">
+        <header>
+            <div class="date-header">
+                <h1 id="current-day">Wednesday</h1>
+                <p id="current-date">8 April 2026</p>
+            </div>
+            <div class="progress-circle">
+                <canvas id="progress-ring" width="60" height="60"></canvas>
+                <span id="progress-percent">0%</span>
+            </div>
+        </header>
+
+        <div class="input-area">
+            <input type="text" id="task-input" placeholder="What needs to be done?">
+            <button id="add-btn">Add</button>
+        </div>
+
+        <nav class="filters">
+            <button class="filter-btn active" data-filter="all">All</button>
+            <button class="filter-btn" data-filter="work">Work</button>
+            <button class="filter-btn" data-filter="personal">Personal</button>
+            <button class="filter-btn" data-filter="urgent">Urgent</button>
+        </nav>
+
+        <main id="todo-list">
+            <!-- Tasks will appear here -->
+        </main>
+
+        <footer class="stats">
+            <p><span id="tasks-left">0</span> tasks remaining</p>
+            <button id="clear-completed">Clear Completed</button>
+        </footer>
+        <div style="text-align:center; font-size:12px; opacity:0.5; margin-top:20px; color:var(--text-muted);">
+            © 2025 Arpit Vishwakarma AKA ScriptSeekers
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+
+</html>
